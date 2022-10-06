@@ -1,4 +1,4 @@
-package edu.vanier.virussimulation;
+package edu.vanier.virussimulation.simulation;
 
 
 import edu.vanier.virussimulation.controllers.WelcomeScreenController;
