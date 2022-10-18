@@ -40,12 +40,12 @@
       </HBox>
    </bottom>
    <center>
-      <ImageView fitHeight="461.0" fitWidth="476.0" BorderPane.alignment="CENTER">
+      <ImageView fitHeight="285.0" fitWidth="404.0" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../../../../../Desktop/download.png" />
+            <Image url="@../images/rectangle%20image.png" />
          </image>
          <BorderPane.margin>
-            <Insets right="200.0" top="200.0" />
+            <Insets right="250.0" top="350.0" />
          </BorderPane.margin>
       </ImageView>
    </center>
