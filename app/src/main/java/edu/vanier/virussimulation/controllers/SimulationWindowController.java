@@ -37,8 +37,8 @@ public class SimulationWindowController {
      final Timeline timeline = new Timeline();
      timeline.setCycleCount(Timeline.INDEFINITE);
      
-     final KeyValue keyValue1 = new KeyValue(c.centerXProperty(),300);
-     final KeyValue keyValue2 = new KeyValue(c.centerYProperty(),300);
+     final KeyValue keyValue1 = new KeyValue(c.centerXProperty(),620);
+     final KeyValue keyValue2 = new KeyValue(c.centerYProperty(),200);
      
      
     final KeyFrame firstKeyFrame = new KeyFrame(Duration.millis(2000),keyValue1);
