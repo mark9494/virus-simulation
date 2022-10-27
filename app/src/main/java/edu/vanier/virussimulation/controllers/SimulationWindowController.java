@@ -6,6 +6,7 @@ package edu.vanier.virussimulation.controllers;
 
 import java.util.Random;
 import javafx.animation.AnimationTimer;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -31,24 +32,27 @@ public class SimulationWindowController {
     private ImageView iv;
     Circle circle;
     private Random randomThingy = new Random();
-
+    Timeline timeline;
     public SimulationWindowController() {
 
     }
 
     public void handleStart() {
 
-        double animationDuration = 2.0;
+        double animationDuration = 0.01;
         circle = new Circle(10);
         circle.setFill(Color.BLUE);
         pane.getChildren().addAll(circle);
-        circle.setCenterX(80);
+        circle.setCenterX(0);
         circle.setCenterY(80);
+        double randomPositionX = randomThingy.nextDouble(pane.getWidth());
 
         EventHandler<ActionEvent> onFinished = this::handleUpdateAnimation;
-        final Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(animationDuration), onFinished)
-        );
+        timeline = new Timeline(new KeyFrame(Duration.millis(animationDuration), onFinished));
+        KeyValue key1 = new KeyValue(circle.translateXProperty(), 510d, Interpolator.LINEAR);
+        KeyFrame f = new KeyFrame(Duration.seconds(0.5), key1);
+        timeline.getKeyFrames().add(f);
+
         //-- Animation configuration.
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(true);
@@ -72,8 +76,9 @@ public class SimulationWindowController {
         //TODO: update the position of the circle.
         // TODO: loop through the list of cicrlce and update their properties.
         // The max X position should not exceed the pane's width pane.getWidth()
-        double randomPositionX = randomThingy.nextDouble(pane.getWidth());
-        circle.setTranslateX(randomPositionX);
+        //double randomPositionX = randomThingy.nextDouble(pane.getWidth());
+        //circle.setTranslateX(randomPositionX);
+        System.out.println(circle.getTranslateX());
         if (circle.intersects(pane.getBoundsInParent())) {
             System.out.println(circle.getCenterX() + " ");
             System.out.println("collision");
