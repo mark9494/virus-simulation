@@ -18,6 +18,11 @@ public class HealthyCells extends Cells {
         
         
     }
+    
+
+    public HealthyCells() {
+      
+    }
 
     public int getHitCounter() {
         return this.hitCounter;

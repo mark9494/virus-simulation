@@ -4,6 +4,7 @@
  */
 package edu.vanier.virussimulation.controllers;
 
+import edu.vanier.virussimulation.cells.HealthyCells;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
@@ -45,8 +46,9 @@ public class SimulationWindowController {
     
     public void handleStart() {
         
-        double animationDuration = 100;
-        circle = new Circle(10);
+        double animationDuration = 0.1;
+        circle = new HealthyCells();
+        circle.setRadius(10);
         circle.setFill(Color.BLUE);
         pane.getChildren().addAll(circle);
         circle.setCenterX(0);
@@ -54,7 +56,7 @@ public class SimulationWindowController {
        
         
         EventHandler<ActionEvent> onFinished = this::handleUpdateAnimation;
-        timeline = new Timeline(new KeyFrame(Duration.millis(animationDuration), onFinished));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(animationDuration), onFinished));
         //KeyValue key1 = new KeyValue(circle.translateXProperty(), 510d, Interpolator.LINEAR);
        // KeyFrame f = new KeyFrame(Duration.seconds(0.5), key1);
         //timeline.getKeyFrames().add(f);
@@ -64,7 +66,7 @@ public class SimulationWindowController {
         timeline.setAutoReverse(true);
         timeline.play();
      randomPositionX1 = randomThingy.nextDouble(pane.getWidth());
-       
+        System.out.println(pane.getWidth());
     }
     
     private void handleUpdateAnimation(ActionEvent event) {
@@ -76,9 +78,9 @@ public class SimulationWindowController {
         //System.out.println("WIDTH :::::" + pane.getWidth());
          double randomPositionX = randomThingy.nextDouble(pane.getWidth());
        
-        circle.setTranslateX(randomPositionX1);
+        circle.setTranslateX(710);
         System.out.println(circle.getTranslateX());
-        if (circle.intersects(pane.getBoundsInParent())) {
+        if (circle.intersects(pane.getBoundsInLocal())) {
             System.out.println(circle.getCenterX() + " ");
             System.out.println("collision");
             circle.setFill(Color.RED);

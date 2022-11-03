@@ -4,12 +4,17 @@
  */
 package edu.vanier.virussimulation.cells;
 
+import javafx.scene.shape.Circle;
 
-public abstract class Cells {
+
+public abstract class Cells extends Circle {
     
     protected double size;
     protected double speed;
     protected boolean motion;// true if the cell should move and false if it shouldn't
+    
+    protected double dx;
+    protected double dy;
     
     public Cells(double size, double speed, boolean motion){
        this.size = size;
@@ -18,6 +23,10 @@ public abstract class Cells {
         
     }
 
+        public Cells(){
+            
+        }
+        
     public double getSize() {
         return this.size;
     }
@@ -41,6 +50,13 @@ public abstract class Cells {
     public void setMotion(boolean motion) {
         this.motion = motion;
     }
+    
+    
+    
+    
+    
+    
+    
     
     //  other methods will be added when needed
     
