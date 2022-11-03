@@ -15,7 +15,7 @@ public abstract class Cells extends Circle {
     
     protected double dx;
     protected double dy;
-    
+
     public Cells(double size, double speed, boolean motion){
        this.size = size;
        this.speed = speed;
@@ -51,7 +51,21 @@ public abstract class Cells extends Circle {
         this.motion = motion;
     }
     
-    
+        public double getDx() {
+        return dx;
+    }
+
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
     
     
     
