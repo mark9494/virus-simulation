@@ -25,7 +25,9 @@ import javafx.util.Duration;
  * @author Mark
  */
 public class SimulationWindowController {
-
+    
+    public double randomPositionX1;
+    
     @FXML
     private Pane pane;
     @FXML
@@ -40,19 +42,19 @@ public class SimulationWindowController {
     public SimulationWindowController() {
 
     }
-
+    
     public void handleStart() {
         
-        double animationDuration = 0.1;
+        double animationDuration = 100;
         circle = new Circle(10);
         circle.setFill(Color.BLUE);
         pane.getChildren().addAll(circle);
         circle.setCenterX(0);
         circle.setCenterY(80);
-        double randomPositionX = randomThingy.nextDouble(pane.getWidth());
+       
         
         EventHandler<ActionEvent> onFinished = this::handleUpdateAnimation;
-        timeline = new Timeline(new KeyFrame(Duration.seconds(animationDuration), onFinished));
+        timeline = new Timeline(new KeyFrame(Duration.millis(animationDuration), onFinished));
         //KeyValue key1 = new KeyValue(circle.translateXProperty(), 510d, Interpolator.LINEAR);
        // KeyFrame f = new KeyFrame(Duration.seconds(0.5), key1);
         //timeline.getKeyFrames().add(f);
@@ -61,26 +63,26 @@ public class SimulationWindowController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(true);
         timeline.play();
-
+     randomPositionX1 = randomThingy.nextDouble(pane.getWidth());
        
     }
-
+    
     private void handleUpdateAnimation(ActionEvent event) {
         //TODO: update the position of the circle.
         // TODO: loop through the list of cicrlce and update their properties.
         // The max X position should not exceed the pane's width pane.getWidth()
        
-        System.out.println("111");
-        System.out.println("WIDTH :::::" + pane.getWidth());
-        double randomPositionX = randomThingy.nextDouble(510d);
-        circle.setTranslateX(randomPositionX);
+        //System.out.println("111");
+        //System.out.println("WIDTH :::::" + pane.getWidth());
+         double randomPositionX = randomThingy.nextDouble(pane.getWidth());
+       
+        circle.setTranslateX(randomPositionX1);
         System.out.println(circle.getTranslateX());
         if (circle.intersects(pane.getBoundsInParent())) {
             System.out.println(circle.getCenterX() + " ");
             System.out.println("collision");
             circle.setFill(Color.RED);
-            circle.setTranslateX(620);
-            //circle.setTranslateY(620);
+            circle.setTranslateX(randomPositionX);
             
         }
         System.out.println("Animation loop: Hi ");
