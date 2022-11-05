@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -29,6 +30,15 @@ import javafx.util.Duration;
 public class SimulationWindowController {
 
     public double randomPositionX1;
+    
+    @FXML
+    private Button start;
+    @FXML
+    private Button stop;
+    @FXML
+    private Button reset;
+    
+    
 
     @FXML
     private Pane pane;
@@ -46,9 +56,20 @@ public class SimulationWindowController {
     }
     double dx = 30;
     double dy = 30;
-
-    public void handleStart() {
-        double animationDuration = 0.02;
+    
+    
+    
+    
+    
+    
+    
+    @FXML
+    public void initialize(){
+       
+      stop.setDisable(true);
+      reset.setDisable(true);
+      
+      double animationDuration = 0.02;
         circle = new HealthyCells();
         circle.setRadius(10);
         circle.setFill(Color.BLUE);
@@ -66,10 +87,37 @@ public class SimulationWindowController {
         //-- Animation configuration.
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(true);
-        timeline.play();
-        randomPositionX1 = randomThingy.nextDouble(pane.getWidth());
+       
+        //randomPositionX1 = randomThingy.nextDouble(pane.getWidth());
         System.out.println(pane.getWidth());
     }
+    
+    
+    
+
+    public void handleStart() {
+       
+        stop.setDisable(false);
+        reset.setDisable(false);
+        start.setDisable(true);
+        
+        timeline.play();
+    }
+    
+    public void handleStop(){
+       reset.setDisable(false);
+       stop.setDisable(true);
+       start.setDisable(false);
+       timeline.pause();
+    }
+    
+    public void handleReset(){
+       reset.setDisable(true);
+       stop.setDisable(false);
+       start.setDisable(false);
+       timeline.stop();
+    }
+    
 
     private void handleUpdateAnimation(ActionEvent event) {
         System.out.println("sasdasd");
