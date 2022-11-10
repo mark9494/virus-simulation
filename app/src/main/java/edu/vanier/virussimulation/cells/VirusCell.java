@@ -8,11 +8,11 @@ package edu.vanier.virussimulation.cells;
  *
  * @author Mark
  */
-public class VirusCells extends Cells{
+public class VirusCell extends Cell{
     
      private double timeTillRecovery;
     
-    public VirusCells( int hitCounter,double size, double speed, boolean motion, double timeTillRecovery){
+    public VirusCell( int hitCounter,double size, double speed, boolean motion, double timeTillRecovery){
        super(size, speed, motion);
        this.timeTillRecovery = timeTillRecovery;
         

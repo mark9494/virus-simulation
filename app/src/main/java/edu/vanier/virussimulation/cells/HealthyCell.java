@@ -8,11 +8,11 @@ package edu.vanier.virussimulation.cells;
  *
  * @author Mark
  */
-public class HealthyCells extends Cells {
+public class HealthyCell extends Cell {
     
     private int hitCounter; // counts how many times the healthy cell has been in contact with a virus cell
     
-    public HealthyCells( int hitCounter,double size, double speed, boolean motion){
+    public HealthyCell( int hitCounter,double size, double speed, boolean motion){
        super(size, speed, motion);
        this.hitCounter = hitCounter;
         
@@ -20,7 +20,7 @@ public class HealthyCells extends Cells {
     }
     
 
-    public HealthyCells() {
+    public HealthyCell() {
       
     }
 

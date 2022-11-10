@@ -6,10 +6,10 @@ package edu.vanier.virussimulation.cells;
 
 
 
-public class RecoveredCells extends Cells {
+public class RecoveredCell extends Cell {
   
     
-    public RecoveredCells( double size, double speed, boolean motion){
+    public RecoveredCell( double size, double speed, boolean motion){
       super(size, speed, motion);
        
         
