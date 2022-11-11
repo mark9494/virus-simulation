@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox prefHeight="102.0" prefWidth="602.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="start" mnemonicParsing="false" onAction="#handleStart" prefHeight="40.0" prefWidth="90.0" text="Start">
+            <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleStart" prefHeight="40.0" prefWidth="90.0" text="Start">
                <HBox.margin>
                   <Insets left="30.0" top="50.0" />
                </HBox.margin>
@@ -20,7 +20,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="stop" mnemonicParsing="false" onAction="#handleStop" prefHeight="40.0" prefWidth="90.0" text="Stop">
+            <Button fx:id="btnPause" mnemonicParsing="false" onAction="#handleStop" prefHeight="40.0" prefWidth="90.0" text="Stop">
                <HBox.margin>
                   <Insets left="30.0" top="50.0" />
                </HBox.margin>
@@ -28,7 +28,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="reset" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="84.0" text="Reset">
+            <Button fx:id="btnReset" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="84.0" text="Reset">
                <HBox.margin>
                   <Insets left="30.0" top="50.0" />
                </HBox.margin>
@@ -40,7 +40,11 @@
       </HBox>
    </bottom>
    <right>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnAddCell" mnemonicParsing="false" onAction="#handleAddCell" text="Add Cell" />
+            <Button fx:id="btnAddVirus" mnemonicParsing="false" onAction="#handleAddVirus" text="Add Virus" />
+         </children></HBox>
    </right>
    <top>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />

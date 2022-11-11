@@ -34,18 +34,26 @@ public class SimulationWindowController {
     public double randomPositionX1;
 
     @FXML
-    private Button start;
+    private Button btnStart;
     @FXML
-    private Button stop;
+    private Button btnAddCell;
     @FXML
-    private Button reset;
+    private Button btnAddVirus;
+    @FXML
+    private Button btnPause;
+    @FXML
+    private Button btnReset;
     @FXML
     private Pane pane;
     @FXML
     private ImageView iv;
-    int numberOfCells;
+    int numberOfCells = 10;
     HealthyCell circle;
-
+    private double currentRate = 10;
+    double cellX = 20;
+    double cellY = 20;
+    int radius = 15;
+    double animationDuration = 0.02;
     private Random randomThingy = new Random();
 
     Timeline timeline;
@@ -57,94 +65,129 @@ public class SimulationWindowController {
 
     @FXML
     public void initialize() {
-        stop.setDisable(true);
-        reset.setDisable(true);
-        int numberOfCells = 25;
-        for (int i = 0; i < numberOfCells; i++) {
-            Cell newCell = new HealthyCell();
-            newCell.setRadius(10);
-            newCell.setCenterX(0);
-            newCell.setCenterY(80);
-            newCell.setFill(Color.BLUE);
-            newCell.setDx(randomThingy.nextDouble()*10);
-            newCell.setDy(randomThingy.nextDouble()*10);
-            cellsArrayList.add(newCell);
-            System.out.println("new dx  " + newCell.getDx());
-        }
-        double animationDuration = 0.02;
-        // circle = new HealthyCell();
-        // circle.setRadius(10);
-        //  circle.setFill(Color.BLUE);
-        pane.getChildren().addAll(cellsArrayList);
-        //  circle.setCenterX(0);
-        //  circle.setCenterY(80);
-        //  circle.setDx(randomPositionX1 * 10);
-        //  circle.setDy(randomPositionX1 * 10);
-        EventHandler<ActionEvent> onFinished = this::handleUpdateAnimation;
-        timeline = new Timeline(new KeyFrame(Duration.seconds(animationDuration), onFinished));
+        generateCells();
+        createAnimation();
         //KeyValue key1 = new KeyValue(circle.translateXProperty(), 510d, Interpolator.LINEAR);
         // KeyFrame f = new KeyFrame(Duration.seconds(0.5), key1);
         //timeline.getKeyFrames().add(f);
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            recenterCells();
+        });
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            //System.out.println("RESIZING THE PANE HEIGHT");
+            recenterCells();
+        });
 
-        //-- Animation configuration.
+    }
+
+    public void generateCells() {
+        for (int i = 0; i < numberOfCells; i++) {
+            cellX = randomThingy.nextInt(400);
+            cellY = randomThingy.nextInt(500);
+            Cell newCell = new HealthyCell();
+            newCell.setRadius(radius);
+            newCell.setCenterX(cellX);
+            newCell.setCenterY(cellY);
+            newCell.setFill(Color.BLUE);
+            newCell.setDx(1);
+            newCell.setDy(1);
+            cellsArrayList.add(newCell);
+            pane.getChildren().addAll(newCell);
+        }
+    }
+
+    private void disableControlButtons(boolean play, boolean pause, boolean stop) {
+        btnStart.setDisable(play);
+        btnPause.setDisable(pause);
+        btnReset.setDisable(stop);
+    }
+
+    public void createAnimation() {
+        timeline = new Timeline(
+                new KeyFrame(Duration.millis(50), e -> handleUpdateAnimation()));
+        timeline.setRate(currentRate);
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(true);
-
-        //randomPositionX1 = randomThingy.nextDouble(pane.getWidth());
-        System.out.println(pane.getWidth());
     }
 
     public void handleStart() {
-
-        stop.setDisable(false);
-        reset.setDisable(false);
-        start.setDisable(true);
-
+        disableControlButtons(false, true, true);
         timeline.play();
     }
 
     public void handleStop() {
-        reset.setDisable(false);
-        stop.setDisable(true);
-        start.setDisable(false);
+        disableControlButtons(false, false, true);
         timeline.pause();
     }
 
     public void handleReset() {
-        reset.setDisable(true);
-        stop.setDisable(false);
-        start.setDisable(false);
+        disableControlButtons(false, false, true);
         timeline.stop();
     }
 
-    private void handleUpdateAnimation(ActionEvent event) {
-        System.out.println("sasdasd");
-        for (Cell c : cellsArrayList) {
-            c.setLayoutX(c.getLayoutX() + (c.getDx()));
-            c.setLayoutY(c.getLayoutY() + (c.getDy()));
-        }
-        // circle.setLayoutX(circle.getLayoutX() + circle.getDx());
-        // circle.setLayoutY(circle.getLayoutY() + circle.getDy());
-        System.out.println(pane.getWidth());
-        System.out.println(pane.getHeight());
-        moveBall();
+    public void handleAddVirus() {
+        addVirusCell();
+    }
 
+    public void handleAddCell() {
+        addHealhyCell();
+    }
+
+    private void handleUpdateAnimation() {
+        moveBall();
+    }
+
+    public void addHealhyCell() {
+        //FIX SPAWN (CAN SPAWN OUTSIDE)
+        //TODO: check the random starting position of cells.
+        //FIXME:
+        HealthyCell hc = new HealthyCell();
+        cellX = randomThingy.nextInt(400);
+        cellY = randomThingy.nextInt(500);
+        hc.setRadius(radius);
+        hc.setDx(1);
+        hc.setDy(1);
+        hc.setCenterX(cellX);
+        hc.setCenterY(cellY);
+        hc.setFill(Color.BLUE);
+        cellsArrayList.add(hc);
+        pane.getChildren().add(hc);
+    }
+
+    public void addVirusCell() {
+                //FIX SPAWN (CAN SPAWN OUTSIDE)
+
+        HealthyCell vc = new HealthyCell();
+        cellX = randomThingy.nextInt(400);
+        cellY = randomThingy.nextInt(500);
+        vc.setRadius(radius);
+        vc.setDx(1);
+        vc.setDy(1);
+        vc.setCenterX(cellX);
+        vc.setCenterY(cellY);
+        vc.setFill(Color.RED);
+        cellsArrayList.add(vc);
+        pane.getChildren().add(vc);
     }
 
     public void moveBall() {
         for (Cell c : cellsArrayList) {
-            if (c.getLayoutX() <= (pane.getMinWidth())
-                    || c.getLayoutX() >= (pane.getWidth() - 20)) {
+            if (c.getCenterX() < c.getRadius()
+                    || c.getCenterX() > pane.getWidth() - c.getRadius()) {
                 c.setDx(c.getDx() * -1);
             }
 
             //If the ball reaches the bottom or top border make the step negative
-            if ((c.getLayoutY() >= ((pane.getHeight() - 102)))
-                    || (c.getLayoutY() <= ((-65)))) {
+            if (c.getCenterY() < c.getRadius()
+                    || c.getCenterY() > pane.getHeight() - c.getRadius()) {
                 c.setDy(c.getDy() * -1);
             }
+            c.setCenterX(c.getDx() + c.getCenterX());
+            c.setCenterY(c.getDy() + c.getCenterY());
+
         }
+
     }
+
     //TODO: update the position of the circle.
     // TODO: loop through the list of cicrlce and update their properties.
     // The max X position should not exceed the pane's width pane.getWidth()
@@ -162,6 +205,25 @@ public class SimulationWindowController {
             
         }
         System.out.println("Animation loop: Hi ");*/
+    private void recenterCells() {
+        final Bounds bounds = pane.getLayoutBounds();
+        double paneWidth = bounds.getMaxX();
+        double paneHeight = bounds.getMaxY();
+        for (Cell cell : cellsArrayList) {
+            // Make sure the coordinates of each cell are in between the new width and height of the pane.            
+            if (cell.getCenterX() > paneWidth) {
+                cell.setDx(cell.getDx() * -1);// Change ball move direction
+                int randomPosX = randomThingy.nextInt((int) paneWidth);
+                cell.setCenterX(cell.getDx() + randomPosX);
+                System.out.println("Recentering the cell...");
+            }
+            if (cell.getCenterY() > paneHeight) {
+                cell.setDy(cell.getDy() * -1);// Change ball move direction                
+                int randomPosY = randomThingy.nextInt((int) 200);
+                cell.setCenterY(cell.getDy() + randomPosY);
+            }
+        }
+    }
 }
 
 //    private void handleUpdateAnimation(ActionEvent event) {
