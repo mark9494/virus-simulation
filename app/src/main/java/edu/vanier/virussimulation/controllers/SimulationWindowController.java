@@ -20,6 +20,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -32,7 +33,8 @@ import javafx.util.Duration;
 public class SimulationWindowController {
 
     public double randomPositionX1;
-
+    @FXML
+    private HBox bottomBar;
     @FXML
     private Button btnStart;
     @FXML
@@ -45,16 +47,14 @@ public class SimulationWindowController {
     private Button btnReset;
     @FXML
     private Pane pane;
-    @FXML
-    private ImageView iv;
-    int numberOfCells = 15;
-    HealthyCell circle;
+
+    private int numberOfCells = 15;
     private double currentRate = 10;
-    double cellX = 20;
-    double cellY = 20;
-    int radius = 15;
-    double animationDuration = 0.02;
-    private Random randomThingy = new Random();
+    private double cellX = 20;
+    private double cellY = 20;
+    private int radius = 15;
+    private double animationDuration = 50;
+    final private Random randomThingy = new Random();
 
     Timeline timeline;
     protected ArrayList<Cell> cellsArrayList = new ArrayList<Cell>();
@@ -104,23 +104,23 @@ public class SimulationWindowController {
 
     public void createAnimation() {
         timeline = new Timeline(
-                new KeyFrame(Duration.millis(50), e -> handleUpdateAnimation()));
+                new KeyFrame(Duration.millis(animationDuration), e -> handleUpdateAnimation()));
         timeline.setRate(currentRate);
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
     public void handleStart() {
-        disableControlButtons(false, true, true);
+        disableControlButtons(true, false, false);
         timeline.play();
     }
 
     public void handleStop() {
-        disableControlButtons(false, false, true);
+        disableControlButtons(false, true, true);
         timeline.pause();
     }
 
     public void handleReset() {
-        disableControlButtons(false, false, true);
+        disableControlButtons(false, true, true);
         timeline.stop();
     }
 
@@ -175,11 +175,21 @@ public class SimulationWindowController {
                     || c.getCenterX() > pane.getWidth() - c.getRadius()) {
                 c.setDx(c.getDx() * -1);
             }
-
             //If the ball reaches the bottom or top border make the step negative
             if (c.getCenterY() < c.getRadius()
                     || c.getCenterY() > pane.getHeight() - c.getRadius()) {
                 c.setDy(c.getDy() * -1);
+            }
+
+            //Border Correction
+            if (c.getCenterY() < 14) {
+                c.setCenterY(14);
+            }
+            if (c.getCenterX() < 14) {
+                c.setCenterX(14);
+            }
+            if (c.getCenterY() > pane.getHeight() - 14) {
+                c.setCenterY(c.getCenterY() - 13);
             }
             c.setCenterX(c.getDx() + c.getCenterX());
             c.setCenterY(c.getDy() + c.getCenterY());
