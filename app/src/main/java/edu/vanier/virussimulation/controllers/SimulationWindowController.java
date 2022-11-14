@@ -47,7 +47,7 @@ public class SimulationWindowController {
     private Pane pane;
     @FXML
     private ImageView iv;
-    int numberOfCells = 10;
+    int numberOfCells = 15;
     HealthyCell circle;
     private double currentRate = 10;
     double cellX = 20;
@@ -83,7 +83,7 @@ public class SimulationWindowController {
     public void generateCells() {
         for (int i = 0; i < numberOfCells; i++) {
             cellX = randomThingy.nextInt(400);
-            cellY = randomThingy.nextInt(500);
+            cellY = randomThingy.nextInt(400);
             Cell newCell = new HealthyCell();
             newCell.setRadius(radius);
             newCell.setCenterX(cellX);
@@ -151,11 +151,10 @@ public class SimulationWindowController {
         hc.setFill(Color.BLUE);
         cellsArrayList.add(hc);
         pane.getChildren().add(hc);
+        recenterCells();
     }
 
     public void addVirusCell() {
-                //FIX SPAWN (CAN SPAWN OUTSIDE)
-
         HealthyCell vc = new HealthyCell();
         cellX = randomThingy.nextInt(400);
         cellY = randomThingy.nextInt(500);
@@ -167,6 +166,7 @@ public class SimulationWindowController {
         vc.setFill(Color.RED);
         cellsArrayList.add(vc);
         pane.getChildren().add(vc);
+        recenterCells();
     }
 
     public void moveBall() {
