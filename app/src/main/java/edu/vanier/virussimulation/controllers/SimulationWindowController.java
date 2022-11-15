@@ -141,8 +141,8 @@ public class SimulationWindowController {
         //TODO: check the random starting position of cells.
         //FIXME:
         HealthyCell hc = new HealthyCell();
-        cellX = randomThingy.nextInt(400);
-        cellY = randomThingy.nextInt(500);
+        cellX = randomThingy.nextInt((int)pane.getWidth());
+        cellY = randomThingy.nextInt((int)pane.getHeight());
         hc.setRadius(radius);
         hc.setDx(1);
         hc.setDy(1);
@@ -156,8 +156,8 @@ public class SimulationWindowController {
 
     public void addVirusCell() {
         HealthyCell vc = new HealthyCell();
-        cellX = randomThingy.nextInt(400);
-        cellY = randomThingy.nextInt(500);
+        cellX = randomThingy.nextInt((int)pane.getWidth());
+        cellY = randomThingy.nextInt((int)pane.getHeight());
         vc.setRadius(radius);
         vc.setDx(1);
         vc.setDy(1);
@@ -225,7 +225,6 @@ public class SimulationWindowController {
                 cell.setDx(cell.getDx() * -1);// Change ball move direction
                 int randomPosX = randomThingy.nextInt((int) paneWidth);
                 cell.setCenterX(cell.getDx() + randomPosX);
-                System.out.println("Recentering the cell...");
             }
             if (cell.getCenterY() > paneHeight) {
                 cell.setDy(cell.getDy() * -1);// Change ball move direction                
