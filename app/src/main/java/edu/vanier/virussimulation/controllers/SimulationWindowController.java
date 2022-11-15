@@ -6,24 +6,17 @@ package edu.vanier.virussimulation.controllers;
 
 import edu.vanier.virussimulation.cells.Cell;
 import edu.vanier.virussimulation.cells.HealthyCell;
+import edu.vanier.virussimulation.cells.VirusCell;
 import java.util.ArrayList;
 import java.util.Random;
-import javafx.animation.AnimationTimer;
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 /**
@@ -67,9 +60,6 @@ public class SimulationWindowController {
     public void initialize() {
         generateCells();
         createAnimation();
-        //KeyValue key1 = new KeyValue(circle.translateXProperty(), 510d, Interpolator.LINEAR);
-        // KeyFrame f = new KeyFrame(Duration.seconds(0.5), key1);
-        //timeline.getKeyFrames().add(f);
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterCells();
         });
@@ -88,7 +78,6 @@ public class SimulationWindowController {
             newCell.setRadius(radius);
             newCell.setCenterX(cellX);
             newCell.setCenterY(cellY);
-            newCell.setFill(Color.BLUE);
             newCell.setDx(1);
             newCell.setDy(1);
             cellsArrayList.add(newCell);
@@ -134,6 +123,7 @@ public class SimulationWindowController {
 
     private void handleUpdateAnimation() {
         moveBall();
+        collide();
     }
 
     public void addHealhyCell() {
@@ -141,29 +131,27 @@ public class SimulationWindowController {
         //TODO: check the random starting position of cells.
         //FIXME:
         HealthyCell hc = new HealthyCell();
-        cellX = randomThingy.nextInt((int)pane.getWidth());
-        cellY = randomThingy.nextInt((int)pane.getHeight());
+        cellX = randomThingy.nextInt((int) pane.getWidth());
+        cellY = randomThingy.nextInt((int) pane.getHeight());
         hc.setRadius(radius);
         hc.setDx(1);
         hc.setDy(1);
         hc.setCenterX(cellX);
         hc.setCenterY(cellY);
-        hc.setFill(Color.BLUE);
         cellsArrayList.add(hc);
         pane.getChildren().add(hc);
         recenterCells();
     }
 
     public void addVirusCell() {
-        HealthyCell vc = new HealthyCell();
-        cellX = randomThingy.nextInt((int)pane.getWidth());
-        cellY = randomThingy.nextInt((int)pane.getHeight());
+        VirusCell vc = new VirusCell();
+        cellX = randomThingy.nextInt((int) pane.getWidth());
+        cellY = randomThingy.nextInt((int) pane.getHeight());
         vc.setRadius(radius);
         vc.setDx(1);
         vc.setDy(1);
         vc.setCenterX(cellX);
         vc.setCenterY(cellY);
-        vc.setFill(Color.RED);
         cellsArrayList.add(vc);
         pane.getChildren().add(vc);
         recenterCells();
@@ -198,23 +186,33 @@ public class SimulationWindowController {
 
     }
 
-    //TODO: update the position of the circle.
-    // TODO: loop through the list of cicrlce and update their properties.
-    // The max X position should not exceed the pane's width pane.getWidth()
-    //System.out.println("111");
-    //System.out.println("WIDTH :::::" + pane.getWidth());
-    /*double randomPositionX = randomThingy.nextDouble(pane.getWidth());
-       
-        circle.setTranslateX(710);
-        System.out.println(circle.getTranslateX());
-        if (circle.intersects(pane.getBoundsInLocal())) {
-            System.out.println(circle.getCenterX() + " ");
-            System.out.println("collision");
-            circle.setFill(Color.RED);
-            circle.setTranslateX(randomPositionX);
-            
+    protected boolean collide() {
+        for (int i = 0; i < cellsArrayList.size(); i++) {
+            for (int j = 0; j < cellsArrayList.size(); j++) {
+                if (j != i) {
+                    Cell a = cellsArrayList.get(i);
+                    Cell b = cellsArrayList.get(j);
+                    if (a.intersects(b.getBoundsInLocal())) {
+                        a.setDx(a.getDx() * -1);
+                        b.setDx(b.getDx() * -1);
+                        a.setDy(a.getDy() * -1);
+                        b.setDy(b.getDy() * -1);
+                        a.setCenterX(a.getDx() + a.getCenterX());
+                        a.setCenterY(a.getDy() + a.getCenterY());
+                        b.setCenterX(b.getDx() + b.getCenterX());
+                        b.setCenterY(b.getDy() + b.getCenterY());
+                        //doesnt work all the time
+                        if (a instanceof HealthyCell && b instanceof VirusCell || b instanceof HealthyCell && a instanceof VirusCell) {
+                            a.setFill(Color.RED);
+
+                        }
+                    }
+                }
+            }
         }
-        System.out.println("Animation loop: Hi ");*/
+        return false;
+    }
+
     private void recenterCells() {
         final Bounds bounds = pane.getLayoutBounds();
         double paneWidth = bounds.getMaxX();
@@ -234,23 +232,3 @@ public class SimulationWindowController {
         }
     }
 }
-
-//    private void handleUpdateAnimation(ActionEvent event) {
-//        //TODO: update the position of the circle.
-//        // TODO: loop through the list of cicrlce and update their properties.
-//        // The max X position should not exceed the pane's width pane.getWidth()
-//        System.out.println("111");
-//        double randomPositionX = randomThingy.nextDouble(pane.getWidth());
-//        circle.setTranslateX(randomPositionX);
-//        System.out.println(circle.getTranslateX());
-//        if( circle.getCenterX() == pane.getWidth()) {
-//            System.out.println(circle.getCenterX() + " ");
-//            System.out.println("collision");
-//            circle.setFill(Color.RED);
-//            circle.setTranslateX(620);
-//            //circle.setTranslateY(620);
-//            
-//        }
-//        System.out.println("Animation loop: Hi ");
-//    }
-

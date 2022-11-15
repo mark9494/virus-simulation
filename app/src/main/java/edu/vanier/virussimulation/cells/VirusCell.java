@@ -4,6 +4,9 @@
  */
 package edu.vanier.virussimulation.cells;
 
+import javafx.scene.paint.Color;
+
+
 /**
  *
  * @author Mark
@@ -17,6 +20,12 @@ public class VirusCell extends Cell{
        this.timeTillRecovery = timeTillRecovery;
         
         
+    }
+
+    public VirusCell() {
+        c = Color.RED;
+        this.setFill(c);
+        this.setIsHealthy(false); 
     }
 
     public double getTimeTillRecovery() {
