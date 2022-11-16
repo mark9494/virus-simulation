@@ -15,7 +15,7 @@ public abstract class Cell extends Circle {
     protected Color c;
     protected boolean isHealthy;
 
-    public boolean isIsHealthy() {
+    public boolean getIsHealthy() {
         return isHealthy;
     }
 

@@ -41,7 +41,7 @@ public class SimulationWindowController {
     @FXML
     private Pane pane;
 
-    private int numberOfCells = 15;
+    private int numberOfCells = 10;
     private double currentRate = 10;
     private double cellX = 20;
     private double cellY = 20;
@@ -202,15 +202,33 @@ public class SimulationWindowController {
                         b.setCenterX(b.getDx() + b.getCenterX());
                         b.setCenterY(b.getDy() + b.getCenterY());
                         //doesnt work all the time
-                        if (a instanceof HealthyCell && b instanceof VirusCell || b instanceof HealthyCell && a instanceof VirusCell) {
-                            a.setFill(Color.RED);
-
+                        if (a instanceof HealthyCell && b instanceof VirusCell) {
+                            healhtyToVirus(a);
+                        }
+                        if (b instanceof HealthyCell && a instanceof VirusCell) {
+                            healhtyToVirus(b);
                         }
                     }
                 }
             }
         }
         return false;
+    }
+
+    public void healhtyToVirus(Cell c) {
+        VirusCell vc = new VirusCell();
+        cellX = c.getCenterX();
+        cellY = c.getCenterY();
+        vc.setRadius(c.getRadius());
+        vc.setDx(c.getDx());
+        vc.setDy(c.getDy());
+        vc.setCenterX(cellX);
+        vc.setCenterY(cellY);
+        cellsArrayList.remove(c);
+        cellsArrayList.add(vc);
+        pane.getChildren().add(vc);
+        pane.getChildren().remove(c);
+        recenterCells();
     }
 
     private void recenterCells() {
