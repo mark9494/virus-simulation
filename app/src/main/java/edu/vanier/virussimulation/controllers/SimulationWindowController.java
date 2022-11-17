@@ -162,6 +162,7 @@ public class SimulationWindowController {
             if (c.getCenterX() < c.getRadius()
                     || c.getCenterX() > pane.getWidth() - c.getRadius()) {
                 c.setDx(c.getDx() * -1);
+                System.out.println(c.getDx());
             }
             //If the ball reaches the bottom or top border make the step negative
             if (c.getCenterY() < c.getRadius()
@@ -187,6 +188,7 @@ public class SimulationWindowController {
     }
 
     protected boolean collide() {
+        
         for (int i = 0; i < cellsArrayList.size(); i++) {
             for (int j = 0; j < cellsArrayList.size(); j++) {
                 if (j != i) {
@@ -248,5 +250,16 @@ public class SimulationWindowController {
                 cell.setCenterY(cell.getDy() + randomPosY);
             }
         }
+    }
+    
+    private void fixCellMovement(){//trying to fix the cell that moves along the pane border. 
+      for(int i =0; i< this.cellsArrayList.size();i++){
+         if(this.cellsArrayList.get(i).getDx() ==0 || this.cellsArrayList.get(i).getDy() ==0){
+            this.cellsArrayList.get(i).setDy(1);
+            this.cellsArrayList.get(i).setDx(1);
+             System.out.println("cell movement is fixed");
+         }
+          
+      }  
     }
 }
