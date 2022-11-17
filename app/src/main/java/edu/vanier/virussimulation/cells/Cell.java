@@ -9,11 +9,20 @@ import javafx.scene.shape.Circle;
 
 public abstract class Cell extends Circle {
 
+    protected int hitCounter;
     protected double size;
     protected double speed;
     protected boolean motion;// true if the cell should move and false if it shouldn't
     protected Color c;
     protected boolean isHealthy;
+
+    public int getHitCounter() {
+        return hitCounter;
+    }
+
+    public void setHitCounter(int hitCounter) {
+        this.hitCounter = hitCounter;
+    }
 
     public boolean getIsHealthy() {
         return isHealthy;
@@ -41,9 +50,9 @@ public abstract class Cell extends Circle {
     }
 
     public Cell() {
+        this.isHealthy = true;
 
     }
-   
 
     public double getSize() {
         return this.size;

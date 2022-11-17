@@ -40,8 +40,8 @@ public class SimulationWindowController {
     private Button btnReset;
     @FXML
     private Pane pane;
-
-    private int numberOfCells = 10;
+    private int numberOfCells = 25;
+    private int convertHitCounter = 2;
     private double currentRate = 10;
     private double cellX = 20;
     private double cellY = 20;
@@ -58,8 +58,9 @@ public class SimulationWindowController {
 
     @FXML
     public void initialize() {
-        generateCells();
         createAnimation();
+        generateCells();
+
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterCells();
         });
@@ -67,13 +68,12 @@ public class SimulationWindowController {
             //System.out.println("RESIZING THE PANE HEIGHT");
             recenterCells();
         });
-
     }
 
     public void generateCells() {
         for (int i = 0; i < numberOfCells; i++) {
-            cellX = randomThingy.nextInt(400);
-            cellY = randomThingy.nextInt(400);
+            cellX = randomThingy.nextInt(900);
+            cellY = randomThingy.nextInt(1000);
             Cell newCell = new HealthyCell();
             newCell.setRadius(radius);
             newCell.setCenterX(cellX);
@@ -96,6 +96,7 @@ public class SimulationWindowController {
                 new KeyFrame(Duration.millis(animationDuration), e -> handleUpdateAnimation()));
         timeline.setRate(currentRate);
         timeline.setCycleCount(Timeline.INDEFINITE);
+
     }
 
     public void handleStart() {
@@ -110,7 +111,13 @@ public class SimulationWindowController {
 
     public void handleReset() {
         disableControlButtons(false, true, true);
+        for (Cell c : cellsArrayList) {
+            pane.getChildren().remove(c);
+        }
+        cellsArrayList.removeAll(cellsArrayList);
+        generateCells();
         timeline.stop();
+
     }
 
     public void handleAddVirus() {
@@ -127,9 +134,6 @@ public class SimulationWindowController {
     }
 
     public void addHealhyCell() {
-        //FIX SPAWN (CAN SPAWN OUTSIDE)
-        //TODO: check the random starting position of cells.
-        //FIXME:
         HealthyCell hc = new HealthyCell();
         cellX = randomThingy.nextInt((int) pane.getWidth());
         cellY = randomThingy.nextInt((int) pane.getHeight());
@@ -162,24 +166,30 @@ public class SimulationWindowController {
             if (c.getCenterX() < c.getRadius()
                     || c.getCenterX() > pane.getWidth() - c.getRadius()) {
                 c.setDx(c.getDx() * -1);
-                System.out.println(c.getDx());
             }
             //If the ball reaches the bottom or top border make the step negative
             if (c.getCenterY() < c.getRadius()
                     || c.getCenterY() > pane.getHeight() - c.getRadius()) {
                 c.setDy(c.getDy() * -1);
             }
-
+            System.out.println(c.getCenterY());
             //Border Correction
-            if (c.getCenterY() < 14) {
-                c.setCenterY(14);
+            //Top Border
+            if (c.getCenterY() < c.getRadius()) {
+                c.setCenterY(c.getRadius() + 1);
             }
-            if (c.getCenterX() < 14) {
-                c.setCenterX(14);
+            //Left Border
+            if (c.getCenterX() < c.getRadius()) {
+                c.setCenterX(c.getRadius() + 1);
             }
-            if (c.getCenterY() > pane.getHeight() - 14) {
-                c.setCenterY(c.getCenterY() - 13);
+            //Right Border
+            if (c.getCenterX() + c.getRadius() > pane.getWidth()) {
+                c.setCenterX(c.getCenterX() - c.getRadius());
             }
+            if (c.getCenterY() + c.getRadius() > pane.getHeight()) {
+                c.setCenterY(c.getCenterY() - c.getRadius());
+            }
+
             c.setCenterX(c.getDx() + c.getCenterX());
             c.setCenterY(c.getDy() + c.getCenterY());
 
@@ -188,7 +198,7 @@ public class SimulationWindowController {
     }
 
     protected boolean collide() {
-        
+
         for (int i = 0; i < cellsArrayList.size(); i++) {
             for (int j = 0; j < cellsArrayList.size(); j++) {
                 if (j != i) {
@@ -204,11 +214,18 @@ public class SimulationWindowController {
                         b.setCenterX(b.getDx() + b.getCenterX());
                         b.setCenterY(b.getDy() + b.getCenterY());
                         //doesnt work all the time
+
                         if (a instanceof HealthyCell && b instanceof VirusCell) {
-                            healhtyToVirus(a);
+                            a.setHitCounter(a.getHitCounter() + 1);
+                            if (a.getHitCounter() == convertHitCounter) {
+                                healhtyToVirus(a);
+                            }
                         }
                         if (b instanceof HealthyCell && a instanceof VirusCell) {
-                            healhtyToVirus(b);
+                            b.setHitCounter(b.getHitCounter() + 1);
+                            if (b.getHitCounter() == convertHitCounter) {
+                                healhtyToVirus(b);
+                            }
                         }
                     }
                 }
@@ -251,15 +268,5 @@ public class SimulationWindowController {
             }
         }
     }
-    
-    private void fixCellMovement(){//trying to fix the cell that moves along the pane border. 
-      for(int i =0; i< this.cellsArrayList.size();i++){
-         if(this.cellsArrayList.get(i).getDx() ==0 || this.cellsArrayList.get(i).getDy() ==0){
-            this.cellsArrayList.get(i).setDy(1);
-            this.cellsArrayList.get(i).setDx(1);
-             System.out.println("cell movement is fixed");
-         }
-          
-      }  
-    }
+
 }
