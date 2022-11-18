@@ -26,6 +26,7 @@ import javafx.util.Duration;
 public class SimulationWindowController {
 
     public double randomPositionX1;
+    private int startBtnCounter = 0;
     @FXML
     private HBox bottomBar;
     @FXML
@@ -42,7 +43,7 @@ public class SimulationWindowController {
     private Pane pane;
     private int numberOfCells = 25;
     private int convertHitCounter = 1;
-    private double currentRate = 1;
+    private double currentRate = 25;
     private double cellX = 20;
     private double cellY = 20;
     private int radius = 15;
@@ -59,8 +60,6 @@ public class SimulationWindowController {
     @FXML
     public void initialize() {
         createAnimation();
-        generateCells();
-
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterCells();
         });
@@ -72,17 +71,7 @@ public class SimulationWindowController {
 
     public void generateCells() {
         for (int i = 0; i < numberOfCells; i++) {
-            cellX = randomThingy.nextInt(900);
-            cellY = randomThingy.nextInt(1000);
-            Cell newCell = new HealthyCell();
-            newCell.setRadius(radius);
-            newCell.setCenterX(cellX);
-            newCell.setCenterY(cellY);
-            newCell.setDx(1);
-            newCell.setDy(1);
-            cellsArrayList.add(newCell);
-            pane.getChildren().addAll(newCell);
-            borderSpawnCorrection(newCell);
+            addHealhyCell();
         }
     }
 
@@ -101,12 +90,17 @@ public class SimulationWindowController {
     }
 
     public void handleStart() {
+        if (startBtnCounter == 0) {
+            generateCells();
+        }
         disableControlButtons(true, false, false);
         timeline.play();
+        startBtnCounter++;
+
     }
 
     public void handleStop() {
-        disableControlButtons(false, true, true);
+        disableControlButtons(false, true, false);
         timeline.pause();
     }
 
@@ -118,7 +112,6 @@ public class SimulationWindowController {
         cellsArrayList.removeAll(cellsArrayList);
         generateCells();
         timeline.stop();
-
     }
 
     public void handleAddVirus() {
@@ -134,8 +127,37 @@ public class SimulationWindowController {
         collide();
     }
 
+    public void handleSpawnOverlap(Cell newCell) {
+        for(Cell c : cellsArrayList){
+        }
+//        for (Cell a : cellsArrayList) {
+//            for (Cell b : cellsArrayList) {
+//                if (a.getCenterX() > b.getCenterX() && a.getCenterY() > b.getCenterY()) {
+//                    if ((a.getCenterX() - b.getCenterX()) < 2 * radius) {
+//                        if (a.getCenterY() > b.getCenterY()) {
+//                            if (a.getCenterY() - b.getCenterY() < 2 * radius) {
+//                                a.setFill(Color.BLACK);
+//                            }
+//                        }
+//                    }
+//                }
+//                if (b.getCenterX() > a.getCenterX()) {
+//                    if ((b.getCenterX() - a.getCenterX()) < 2 * radius) {
+//                        if (b.getCenterY() > a.getCenterY()) {
+//                            if (b.getCenterY() - a.getCenterY() < 2 * radius) {
+//                                b.setFill(Color.BLACK);
+//
+//                            }
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
+    }
+
     public void addHealhyCell() {
-        
+
         HealthyCell hc = new HealthyCell();
         cellX = randomThingy.nextInt((int) pane.getWidth());
         cellY = randomThingy.nextInt((int) pane.getHeight());
@@ -144,11 +166,12 @@ public class SimulationWindowController {
         hc.setDy(1);
         hc.setCenterX(cellX);
         hc.setCenterY(cellY);
+        handleSpawnOverlap(hc);
         cellsArrayList.add(hc);
         pane.getChildren().add(hc);
         recenterCells();
         borderSpawnCorrection(hc);
-        
+
     }
 
     public void addVirusCell() {
@@ -177,10 +200,8 @@ public class SimulationWindowController {
                     || c.getCenterY() > pane.getHeight() - c.getRadius()) {
                 c.setDy(c.getDy() * -1);
             }
-            System.out.println(c.getCenterY());
             //Border Correction
             //Top Border
-
 
             c.setCenterX(c.getDx() + c.getCenterX());
             c.setCenterY(c.getDy() + c.getCenterY());
@@ -260,23 +281,23 @@ public class SimulationWindowController {
             }
         }
     }
-    
-    private void borderSpawnCorrection(Cell c ){
-       
-                   if (c.getCenterY() < c.getRadius()) {
-                c.setCenterY(c.getRadius() + 1);
-            }
-            //Left Border
-            if (c.getCenterX() < c.getRadius()) {
-                c.setCenterX(c.getRadius() + 1);
-            }
-            //Right Border
-            if (c.getCenterX() + c.getRadius() > pane.getWidth()) {
-                c.setCenterX(c.getCenterX() - c.getRadius());
-            }
-            if (c.getCenterY() + c.getRadius() > pane.getHeight()) {
-                c.setCenterY(c.getCenterY() - c.getRadius());
-            } 
+
+    private void borderSpawnCorrection(Cell c) {
+
+        if (c.getCenterY() < c.getRadius()) {
+            c.setCenterY(c.getRadius() + 1);
+        }
+        //Left Border
+        if (c.getCenterX() < c.getRadius()) {
+            c.setCenterX(c.getRadius() + 1);
+        }
+        //Right Border
+        if (c.getCenterX() + c.getRadius() > pane.getWidth()) {
+            c.setCenterX(c.getCenterX() - c.getRadius());
+        }
+        if (c.getCenterY() + c.getRadius() > pane.getHeight()) {
+            c.setCenterY(c.getCenterY() - c.getRadius());
+        }
     }
 
 }
