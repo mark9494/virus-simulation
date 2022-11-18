@@ -41,8 +41,8 @@ public class SimulationWindowController {
     @FXML
     private Pane pane;
     private int numberOfCells = 25;
-    private int convertHitCounter = 2;
-    private double currentRate = 10;
+    private int convertHitCounter = 1;
+    private double currentRate = 1;
     private double cellX = 20;
     private double cellY = 20;
     private int radius = 15;
@@ -82,6 +82,7 @@ public class SimulationWindowController {
             newCell.setDy(1);
             cellsArrayList.add(newCell);
             pane.getChildren().addAll(newCell);
+            borderSpawnCorrection(newCell);
         }
     }
 
@@ -134,6 +135,7 @@ public class SimulationWindowController {
     }
 
     public void addHealhyCell() {
+        
         HealthyCell hc = new HealthyCell();
         cellX = randomThingy.nextInt((int) pane.getWidth());
         cellY = randomThingy.nextInt((int) pane.getHeight());
@@ -145,6 +147,8 @@ public class SimulationWindowController {
         cellsArrayList.add(hc);
         pane.getChildren().add(hc);
         recenterCells();
+        borderSpawnCorrection(hc);
+        
     }
 
     public void addVirusCell() {
@@ -159,6 +163,7 @@ public class SimulationWindowController {
         cellsArrayList.add(vc);
         pane.getChildren().add(vc);
         recenterCells();
+        borderSpawnCorrection(vc);
     }
 
     public void moveBall() {
@@ -175,20 +180,7 @@ public class SimulationWindowController {
             System.out.println(c.getCenterY());
             //Border Correction
             //Top Border
-            if (c.getCenterY() < c.getRadius()) {
-                c.setCenterY(c.getRadius() + 1);
-            }
-            //Left Border
-            if (c.getCenterX() < c.getRadius()) {
-                c.setCenterX(c.getRadius() + 1);
-            }
-            //Right Border
-            if (c.getCenterX() + c.getRadius() > pane.getWidth()) {
-                c.setCenterX(c.getCenterX() - c.getRadius());
-            }
-            if (c.getCenterY() + c.getRadius() > pane.getHeight()) {
-                c.setCenterY(c.getCenterY() - c.getRadius());
-            }
+
 
             c.setCenterX(c.getDx() + c.getCenterX());
             c.setCenterY(c.getDy() + c.getCenterY());
@@ -267,6 +259,24 @@ public class SimulationWindowController {
                 cell.setCenterY(cell.getDy() + randomPosY);
             }
         }
+    }
+    
+    private void borderSpawnCorrection(Cell c ){
+       
+                   if (c.getCenterY() < c.getRadius()) {
+                c.setCenterY(c.getRadius() + 1);
+            }
+            //Left Border
+            if (c.getCenterX() < c.getRadius()) {
+                c.setCenterX(c.getRadius() + 1);
+            }
+            //Right Border
+            if (c.getCenterX() + c.getRadius() > pane.getWidth()) {
+                c.setCenterX(c.getCenterX() - c.getRadius());
+            }
+            if (c.getCenterY() + c.getRadius() > pane.getHeight()) {
+                c.setCenterY(c.getCenterY() - c.getRadius());
+            } 
     }
 
 }
