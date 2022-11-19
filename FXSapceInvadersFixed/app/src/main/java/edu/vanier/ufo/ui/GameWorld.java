@@ -271,6 +271,13 @@ public class GameWorld extends GameEngine {
      */
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
+        if(spriteA.collide(spriteB)){
+            if(spriteA instanceof Missile || spriteB instanceof Missile){
+            spriteA.handleDeath(this);
+            spriteB.handleDeath(this);
+           return true;
+            }
+        }
         //TODO: implement collision detection here.
         getSpriteManager().getCollisionsToCheck();
         

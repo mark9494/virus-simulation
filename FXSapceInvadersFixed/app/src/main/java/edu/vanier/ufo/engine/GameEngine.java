@@ -90,6 +90,7 @@ public abstract class GameEngine {
         Timeline gameLoop = new Timeline(gameFrame);
         gameLoop.setCycleCount(Animation.INDEFINITE);
         setGameLoop(gameLoop);
+        
     }
 
     /**
@@ -115,6 +116,8 @@ public abstract class GameEngine {
      */
     protected void updateSprites() {
         for (Sprite sprite : spriteManager.getAllSprites()) {
+            sprite.setCollisionBounds(sprite.getCollisionBounds());
+            
             handleUpdate(sprite);
         }
     }
@@ -124,7 +127,8 @@ public abstract class GameEngine {
      *
      * @param sprite - The sprite to update.
      */
-    protected void handleUpdate(Sprite sprite) {
+    protected void handleUpdate(Sprite sprite) {//this method is being called but does not work
+        //System.out.println(sprite.getHeight());//this print statement isnt happening
     }
 
     /**
@@ -138,18 +142,30 @@ public abstract class GameEngine {
         //FIXME: handle collision with the spaceship.
         // check other sprite's collisions
         spriteManager.resetCollisionsToCheck();
+       
+        
+        
         // check each sprite against other sprite objects.
-        for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
-            for (Sprite spriteB : spriteManager.getAllSprites()) {
-                if (handleCollision(spriteA, spriteB)) {
-                    System.out.println("hiii");
+        for (int i = 0; i < spriteManager.getCollisionsToCheck().size(); i++) {
+            
+            for (int j = 0; j < spriteManager.getAllSprites().size(); j++) {
+                if(j!=i){
+                  if (handleCollision(spriteManager.getAllSprites().get(i), spriteManager.getCollisionsToCheck().get(j))) {
+                      
+                          System.out.println("hit");
                     
-                    // The break helps optimize the collisions
-                    //  The break statement means one object only hits another
-                    // object as opposed to one hitting many objects.
-                    // To be more accurate comment out the break statement.
-                    break;
+                     
+                  
+                  }
                 }
+//                
+//                    
+//                    // The break helps optimize the collisions
+//                    //  The break statement means one object only hits another
+//                    // object as opposed to one hitting many objects.
+//                    // To be more accurate comment out the break statement.
+                    break;
+//                }
             }
         }
     }
@@ -163,12 +179,21 @@ public abstract class GameEngine {
      * @return boolean True if the objects collided, otherwise false.
      */
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        if(spriteA.intersects((spriteB.getCollisionBounds().getBoundsInLocal()))){ 
-           
-            System.out.println("oops");
-            return true;
-        } else {
-        }
+        
+//        if(spriteA.collide(spriteB)){
+//            
+//           return true; 
+//        }
+//        if(spriteB.getCollisionBounds().intersects(spriteA.getCollisionBounds().getBoundsInLocal())){
+//            return true;
+//        }
+      //  spriteB.getCollisionBounds();
+//        if(spriteA.intersects(()){ 
+//           
+//            System.out.println("oops");
+//            return true;
+//        } else {
+//        }
             
         return false;
     }
