@@ -1,3 +1,0 @@
-//TODO: Change your project name here.
-rootProject.name = 'FXSapceInvaders'
-include('app')
