@@ -134,6 +134,7 @@ public abstract class GameEngine {
      * handleCollision() method.
      */
     protected void checkCollisions() {
+        
         //FIXME: handle collision with the spaceship.
         // check other sprite's collisions
         spriteManager.resetCollisionsToCheck();
@@ -141,6 +142,8 @@ public abstract class GameEngine {
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                 if (handleCollision(spriteA, spriteB)) {
+                    System.out.println("hiii");
+                    
                     // The break helps optimize the collisions
                     //  The break statement means one object only hits another
                     // object as opposed to one hitting many objects.
@@ -160,6 +163,13 @@ public abstract class GameEngine {
      * @return boolean True if the objects collided, otherwise false.
      */
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
+        if(spriteA.intersects((spriteB.getCollisionBounds().getBoundsInLocal()))){ 
+           
+            System.out.println("oops");
+            return true;
+        } else {
+        }
+            
         return false;
     }
 
