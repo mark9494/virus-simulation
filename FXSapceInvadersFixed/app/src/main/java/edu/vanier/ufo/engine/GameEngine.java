@@ -1,5 +1,6 @@
 package edu.vanier.ufo.engine;
 
+import edu.vanier.ufo.game.Missile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -146,11 +147,11 @@ public abstract class GameEngine {
         
         
         // check each sprite against other sprite objects.
-        for (int i = 0; i < spriteManager.getCollisionsToCheck().size(); i++) {
+        for (int i = 0; i < spriteManager.getAllSprites().size(); i++) {
             
             for (int j = 0; j < spriteManager.getAllSprites().size(); j++) {
                 if(j!=i){
-                  if (handleCollision(spriteManager.getAllSprites().get(i), spriteManager.getCollisionsToCheck().get(j))) {
+                  if (handleCollision(spriteManager.getAllSprites().get(i), spriteManager.getAllSprites().get(j))) {
                       
                           System.out.println("hit");
                     
@@ -179,7 +180,15 @@ public abstract class GameEngine {
      * @return boolean True if the objects collided, otherwise false.
      */
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-        
+                
+        if(spriteA.collide(spriteB)){
+            if(spriteA instanceof Missile || spriteB instanceof Missile){
+                
+            spriteA.handleDeath(this);
+            spriteB.handleDeath(this);
+           return true;
+            }
+           }
 //        if(spriteA.collide(spriteB)){
 //            
 //           return true; 
@@ -201,7 +210,7 @@ public abstract class GameEngine {
     /**
      * Sprites to be cleaned up.
      */
-    protected void cleanupSprites() {
+    protected void cleanupSprites(){
         spriteManager.cleanupSprites();
     }
 
