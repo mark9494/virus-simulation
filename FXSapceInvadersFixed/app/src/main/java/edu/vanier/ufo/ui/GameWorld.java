@@ -7,7 +7,8 @@ import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;;
+import javafx.scene.Scene;
+;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,6 +30,8 @@ import javafx.scene.image.ImageView;
  *
  * @author cdea
  */
+
+
 public class GameWorld extends GameEngine {
 
     // mouse pt label
@@ -80,10 +83,9 @@ public class GameWorld extends GameEngine {
         row2.getChildren().add(mousePressPtLabel);
         stats.getChildren().add(row1);
         stats.getChildren().add(row2);
-        
+
         //TODO: Add the HUD here.
         getSceneNodes().getChildren().add(0, stats);
-
 
         // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
@@ -271,22 +273,27 @@ public class GameWorld extends GameEngine {
      */
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-       
-        
-        if(spriteA.collide(spriteB)){// this if statement works 
-            //spriteA.handleDeath(this);
-             //spriteB.handleDeath(this);
+
+        if (spriteA.collide(spriteB)) {// this if statement works 
             
-            if(spriteA instanceof Missile || spriteB instanceof Missile){//this if statement does not always work
-               
-             spriteA.handleDeath(this);
-             spriteB.handleDeath(this);
-           
-            return true; 
-            }
-               
-            }
-        
+            
+                
+//            if (spriteA instanceof Missile && spriteB instanceof Atom) {//this if statement does not always work
+//                System.out.println("missile");
+//                spriteA.handleDeath(this);
+//                spriteB.handleDeath(this);
+//
+//                return true;
+//            }
+//            if (spriteA instanceof Atom && spriteB instanceof Missile) {
+//                System.out.println("atom");
+//                spriteA.handleDeath(this);
+//                spriteB.handleDeath(this);
+//                return true;
+//            }
+
+        }
+
 //          String a = spriteA + "";  
 //           String b = spriteB + "";
 //            
@@ -300,8 +307,6 @@ public class GameWorld extends GameEngine {
 //        }
         //return false;
         return false;
-        }
-        //return false;
     }
-    
-
+    //return false;
+}
