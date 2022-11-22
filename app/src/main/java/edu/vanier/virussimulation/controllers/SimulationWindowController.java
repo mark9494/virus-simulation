@@ -84,6 +84,8 @@ public class SimulationWindowController extends SimulationSettings {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
     }
+    public void endSimulation(){
+    }
 
     public void handleStart() {
         if (startBtnCounter == 0) {
@@ -122,6 +124,7 @@ public class SimulationWindowController extends SimulationSettings {
     private void handleUpdateAnimation() {
         moveBall();
         collide();
+        endSimulation();
     }
 
     public void handleSpawnOverlap(Cell newCell) {
