@@ -5,8 +5,10 @@
 package edu.vanier.virussimulation.controllers;
 
 import edu.vanier.virussimulation.cells.Cell;
+import edu.vanier.virussimulation.cells.CovidVirus;
 import edu.vanier.virussimulation.cells.HealthyCell;
 import edu.vanier.virussimulation.cells.VirusCell;
+import edu.vanier.virussimulation.settings.SimulationSettings;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.KeyFrame;
@@ -23,7 +25,7 @@ import javafx.util.Duration;
  *
  * @author Mark
  */
-public class SimulationWindowController {
+public class SimulationWindowController extends SimulationSettings {
 
     public double randomPositionX1;
     private int startBtnCounter = 0;
@@ -41,13 +43,7 @@ public class SimulationWindowController {
     private Button btnReset;
     @FXML
     private Pane pane;
-    private int numberOfCells = 25;
-    private int convertHitCounter = 1;
-    private double currentRate = 25;
-    private double cellX = 20;
-    private double cellY = 20;
-    private int radius = 15;
-    private double animationDuration = 50;
+
     final private Random randomThingy = new Random();
 
     Timeline timeline;
@@ -115,7 +111,8 @@ public class SimulationWindowController {
     }
 
     public void handleAddVirus() {
-        addVirusCell();
+        //addVirusCell();
+        createCovidVirus();
     }
 
     public void handleAddCell() {
@@ -128,7 +125,7 @@ public class SimulationWindowController {
     }
 
     public void handleSpawnOverlap(Cell newCell) {
-        for(Cell c : cellsArrayList){
+        for (Cell c : cellsArrayList) {
         }
 //        for (Cell a : cellsArrayList) {
 //            for (Cell b : cellsArrayList) {
@@ -179,14 +176,31 @@ public class SimulationWindowController {
         cellX = randomThingy.nextInt((int) pane.getWidth());
         cellY = randomThingy.nextInt((int) pane.getHeight());
         vc.setRadius(radius);
-        vc.setDx(1);
-        vc.setDy(1);
+        vc.setDx(healthyDx);
+        vc.setDy(healthyDy);
         vc.setCenterX(cellX);
         vc.setCenterY(cellY);
         cellsArrayList.add(vc);
         pane.getChildren().add(vc);
         recenterCells();
         borderSpawnCorrection(vc);
+    }
+
+    //Double the speed of healthy Cells
+    //Healhty needs to be hit 2 times to 
+    public void createCovidVirus() {
+        CovidVirus cv = new CovidVirus();
+        convertHitCounter = cv.getHitCounter();
+        cellX = randomThingy.nextInt((int) pane.getWidth());
+        cellY = randomThingy.nextInt((int) pane.getHeight());
+        cv.setDx(healthyDx * 2);
+        cv.setDy(healthyDy * 2);
+        cv.setCenterX(cellX);
+        cv.setCenterY(cellY);
+        cellsArrayList.add(cv);
+        pane.getChildren().add(cv);
+        recenterCells();
+        borderSpawnCorrection(cv);
     }
 
     public void moveBall() {
@@ -231,13 +245,13 @@ public class SimulationWindowController {
                         if (a instanceof HealthyCell && b instanceof VirusCell) {
                             a.setHitCounter(a.getHitCounter() + 1);
                             if (a.getHitCounter() == convertHitCounter) {
-                                healhtyToVirus(a);
+                                healhtyToVirus(a, (VirusCell) b);
                             }
                         }
                         if (b instanceof HealthyCell && a instanceof VirusCell) {
                             b.setHitCounter(b.getHitCounter() + 1);
                             if (b.getHitCounter() == convertHitCounter) {
-                                healhtyToVirus(b);
+                                healhtyToVirus(b, (VirusCell) a);
                             }
                         }
                     }
@@ -247,20 +261,21 @@ public class SimulationWindowController {
         return false;
     }
 
-    public void healhtyToVirus(Cell c) {
-        VirusCell vc = new VirusCell();
-        cellX = c.getCenterX();
-        cellY = c.getCenterY();
-        vc.setRadius(c.getRadius());
-        vc.setDx(c.getDx());
-        vc.setDy(c.getDy());
-        vc.setCenterX(cellX);
-        vc.setCenterY(cellY);
-        cellsArrayList.remove(c);
-        cellsArrayList.add(vc);
-        pane.getChildren().add(vc);
-        pane.getChildren().remove(c);
-        recenterCells();
+    public void healhtyToVirus(Cell c, VirusCell a) {
+        if (a instanceof CovidVirus) {
+            CovidVirus vc = new CovidVirus();
+            cellX = c.getCenterX();
+            cellY = c.getCenterY();
+            vc.setDx(healthyDx * 2);
+            vc.setDy(healthyDy * 2);
+            vc.setCenterX(cellX);
+            vc.setCenterY(cellY);
+            cellsArrayList.remove(c);
+            cellsArrayList.add(vc);
+            pane.getChildren().add(vc);
+            pane.getChildren().remove(c);
+            recenterCells();
+        }
     }
 
     private void recenterCells() {

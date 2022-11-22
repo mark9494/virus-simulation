@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 public class VirusCell extends Cell{
     
      private double timeTillRecovery;
+     
     
     public VirusCell( int hitCounter,double size, double speed, boolean motion, double timeTillRecovery){
        super(size, speed, motion);
@@ -23,8 +24,6 @@ public class VirusCell extends Cell{
     }
 
     public VirusCell() {
-        c = Color.RED;
-        this.setFill(c);
         this.setIsHealthy(false); 
     }
 
