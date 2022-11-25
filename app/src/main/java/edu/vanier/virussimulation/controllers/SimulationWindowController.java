@@ -48,6 +48,19 @@ public class SimulationWindowController extends SimulationSettings {
     private Button btnReset;
     @FXML
     private Pane pane;
+    
+    
+   //Ammars Work
+//    @FXML 
+//    private Label nbHCells;
+//    @FXML 
+//    private Label nbVCells;
+//    @FXML 
+//    private Label percHCells;
+//    @FXML 
+//    private Label percVCells;
+    
+    
     StopWatch sw;
         SimulationSettings simSettings;
 
@@ -353,5 +366,18 @@ public class SimulationWindowController extends SimulationSettings {
             c.setCenterY(c.getCenterY() - c.getRadius());
         }
     }
+    
+    //Ammars work
+//    private ArrayList HCellsList;
+//    private void statsCounter(){
+//        for(Cell c: cellsArrayList){
+//            if(c instanceof HealthyCell){
+//                this.HCellsList = new ArrayList();
+//                this.HCellsList.add(c);
+//            }else if(c instanceof VirusCell){
+//                
+//            }
+//        }
+//    }
 
 }
