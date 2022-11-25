@@ -12,7 +12,7 @@ public class SimulationSettings {
     
     protected int numberOfCells = 25;
     protected int convertHitCounter = 1;
-    protected double currentRate = 15;
+    protected double currentRate = 10;
     protected double cellX = 20;
     protected double cellY = 20;
     protected int healthyDx = 1;

@@ -94,6 +94,7 @@ public class SimulationWindowController extends SimulationSettings {
         }
         if(!isHealthyLeft){
             timeline.stop();
+            disableControlButtons(true, true, false);
         }
     }
 

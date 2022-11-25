@@ -4,7 +4,9 @@
  */
 package edu.vanier.virussimulation.cells;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 /**
  *
@@ -21,8 +23,10 @@ public class HealthyCell extends Cell {
     }
 
     public HealthyCell() {
-        c = Color.BLUE;
-        this.setFill(c);
+        
+        Image healthy1 = new Image("/images/Healthy_Cell_3.png", false);
+        
+        this.setFill(new ImagePattern(healthy1));
         this.setIsHealthy(true);
         this.hitCounter = 0;
     }

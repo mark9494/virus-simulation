@@ -4,7 +4,9 @@
  */
 package edu.vanier.virussimulation.cells;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 /**
  *
@@ -17,8 +19,9 @@ public class CovidVirus extends VirusCell {
     }
 
     public CovidVirus() {
-        hitCounter = 2;
-        this.setFill(Color.PURPLE);
+        Image virus = new Image("/images/Red_Virus.png", false);
+        hitCounter = 1;
+        this.setFill(new ImagePattern(virus));
         this.setRadius(15);
     }
     
