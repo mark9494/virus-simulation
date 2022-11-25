@@ -18,7 +18,7 @@ import javafx.util.Duration;
  * @author cdea
  */
 public class Atom extends Sprite {
-
+       
     /**
      * Constructor will create a optionally create a gradient fill circle shape.
      * This sprite will contain a JavaFX Circle node.
@@ -26,11 +26,14 @@ public class Atom extends Sprite {
      * @param imagePath the path of the image to be embedded in the node object.
      */
     public Atom(String imagePath) {
+        
+        
         ImageView newAtom = new ImageView();
         Image shipImage = new Image(imagePath, true);        
         newAtom.setImage(shipImage);        
         this.node = newAtom;
         this.collidingNode = newAtom;
+        
     }
 
     /**

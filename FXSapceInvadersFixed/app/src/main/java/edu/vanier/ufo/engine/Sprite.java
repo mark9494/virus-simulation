@@ -53,6 +53,7 @@ public abstract class Sprite {
      * false.
      */
     public boolean collide(Sprite other) {
+        
 //        if(collidingNode.getBoundsInParent().intersects(other.node.getBoundsInParent())){
 //            System.out.println("true");  the commented out code shows that this method is working  
 //        }

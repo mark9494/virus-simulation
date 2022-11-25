@@ -2,6 +2,7 @@ package edu.vanier.ufo.engine;
 
 import edu.vanier.ufo.game.Atom;
 import edu.vanier.ufo.game.Missile;
+import edu.vanier.ufo.game.Ship;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -150,26 +151,43 @@ public abstract class GameEngine {
         // check each sprite against other sprite objects.
         for (Sprite spriteA : spriteManager.getAllSprites() ) {
             
-            for (Sprite SpriteB : spriteManager.getAllSprites()) {
-                  if (handleCollision(spriteA, SpriteB)) {
+            for (Sprite spriteB : spriteManager.getAllSprites()) {
+                
+                  if (handleCollision(spriteA, spriteB)) {
                       
-                          System.out.println("hit");
+                          // this if statement works 
+                              
+            
+                
+//            if (spriteA instanceof Missile && spriteB instanceof Atom ) {//this if statement does not always work
+//                System.out.println("missile");
+//                spriteA.handleDeath(this);
+//                spriteB.handleDeath(this);
+//                break;
+//                
+//            }else if(spriteB instanceof Missile && spriteA instanceof Atom ){
+//                System.out.println("missile");
+//                spriteA.handleDeath(this);
+//                spriteB.handleDeath(this);
+//                break;
+            }
                     
                      
-                  
-                  }
+                      
+                  break;
 //                
 //                    
 //                    // The break helps optimize the collisions
 //                    //  The break statement means one object only hits another
 //                    // object as opposed to one hitting many objects.
 //                    // To be more accurate comment out the break statement.
-                    break;
+                    
 //                }
-            }
+            //}
+                  
         }
     }
-
+    }
     /**
      * When two objects collide this method can handle the passed in sprite
      * objects. By default it returns false, meaning the objects do not collide.
@@ -179,7 +197,7 @@ public abstract class GameEngine {
      * @return boolean True if the objects collided, otherwise false.
      */
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
-                
+            
         
 //        if(spriteA.collide(spriteB)){
 //            

@@ -274,38 +274,24 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
 
-        if (spriteA.collide(spriteB)) {// this if statement works 
-            
+        if(spriteA.collide(spriteB)){
             
                 
-//            if (spriteA instanceof Missile && spriteB instanceof Atom) {//this if statement does not always work
-//                System.out.println("missile");
-//                spriteA.handleDeath(this);
-//                spriteB.handleDeath(this);
-//
-//                return true;
-//            }
-//            if (spriteA instanceof Atom && spriteB instanceof Missile) {
-//                System.out.println("atom");
-//                spriteA.handleDeath(this);
-//                spriteB.handleDeath(this);
-//                return true;
-//            }
-
+            if (spriteA instanceof Missile && spriteB instanceof Atom ) {//always passing to thsi if statement
+               
+                
+                System.out.println("1");
+                spriteA.handleDeath(this);
+                spriteB.handleDeath(this);
+               return true;
+            
+            }else if(spriteB instanceof Missile && spriteA instanceof Atom ){ //never being entered
+                System.out.println("missile");
+                spriteA.handleDeath(this);
+                spriteB.handleDeath(this);
+                return true;
+            }
         }
-
-//          String a = spriteA + "";  
-//           String b = spriteB + "";
-//            
-//        if(a.equalsIgnoreCase("missile") || b.equalsIgnoreCase("missile")){
-//            System.out.println("yes");
-//            
-//            spriteA.handleDeath(this);
-//             spriteB.handleDeath(this);
-//            
-//            return true;
-//        }
-        //return false;
         return false;
     }
     //return false;
