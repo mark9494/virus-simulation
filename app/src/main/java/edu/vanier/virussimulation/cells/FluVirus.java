@@ -5,24 +5,24 @@
 package edu.vanier.virussimulation.cells;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 /**
  *
  * @author 2161743
  */
-public class CovidVirus extends VirusCell {
+public class FluVirus extends VirusCell {
 
-    public CovidVirus(int hitCounter, double size, double speed, boolean motion, double timeTillRecovery) {
+    public FluVirus(int hitCounter, double size, double speed, boolean motion, double timeTillRecovery) {
         super(hitCounter, size, speed, motion, timeTillRecovery);
     }
 
-    public CovidVirus() {
-        Image virus = new Image("/images/coronavirus_2d.png", false);
+//3 hits(less contagious, 700 times(0.7) smaller relative size)
+    public FluVirus() {
+        Image virus = new Image("/images/Red_Virus.png", false);
         hitCounter = 1;
         this.setFill(new ImagePattern(virus));
-        this.setRadius(20);
+        this.setRadius(14);
     }
-    
+
 }

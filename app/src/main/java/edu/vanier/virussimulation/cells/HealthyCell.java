@@ -24,7 +24,7 @@ public class HealthyCell extends Cell {
 
     public HealthyCell() {
         
-        Image healthy1 = new Image("/images/Healthy_Cell_3.png", false);
+        Image healthy1 = new Image("/images/Healthy_Cell_1.png", false);
         
         this.setFill(new ImagePattern(healthy1));
         this.setIsHealthy(true);

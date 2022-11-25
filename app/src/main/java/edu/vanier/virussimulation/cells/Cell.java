@@ -6,9 +6,10 @@ package edu.vanier.virussimulation.cells;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import org.apache.commons.lang3.time.StopWatch;
 
 public abstract class Cell extends Circle {
-
+    
     protected int hitCounter;
     protected double size;
     protected double speed;
