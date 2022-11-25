@@ -85,6 +85,16 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
     public void endSimulation(){
+        boolean isHealthyLeft = false;
+        for(Cell c : cellsArrayList){
+            if(c instanceof HealthyCell){
+                isHealthyLeft = true;
+            }
+            
+        }
+        if(!isHealthyLeft){
+            timeline.stop();
+        }
     }
 
     public void handleStart() {
