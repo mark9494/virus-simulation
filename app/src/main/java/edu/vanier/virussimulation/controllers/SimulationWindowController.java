@@ -168,6 +168,10 @@ public class SimulationWindowController extends SimulationSettings {
     public void handleAddHealthyCell() {
         addHealhyCell();
     }
+    
+    public void handleSubmit(){
+        
+    }
 
     private void handleUpdateAnimation() {
         moveBall();
