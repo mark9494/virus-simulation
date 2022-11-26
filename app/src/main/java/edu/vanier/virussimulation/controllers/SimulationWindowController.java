@@ -18,6 +18,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -47,6 +48,18 @@ public class SimulationWindowController extends SimulationSettings {
     @FXML
     private Button btnReset;
     @FXML
+    private Slider sldAmountCell;
+    @FXML
+    private Slider sldSizeCell;
+    @FXML
+    private Slider sldSpeedCell;
+    @FXML
+    private Slider sldAmountVirus;
+    @FXML
+    private Slider sldSizeVirus;
+    @FXML
+    private Slider sldSpeedVirus;
+    @FXML
     private Pane pane;
     
     
@@ -59,7 +72,11 @@ public class SimulationWindowController extends SimulationSettings {
 //    private Label percHCells;
 //    @FXML 
 //    private Label percVCells;
-    
+    public void handleSubmit(){
+        //update cell size/radius
+        int newCellAmt = (int)sldAmountCell.getValue();
+        
+    }
     
     StopWatch sw;
         SimulationSettings simSettings;
@@ -169,9 +186,7 @@ public class SimulationWindowController extends SimulationSettings {
         addHealhyCell();
     }
     
-    public void handleSubmit(){
-        
-    }
+    
 
     private void handleUpdateAnimation() {
         moveBall();
