@@ -50,9 +50,9 @@ public class SimulationWindowController extends SimulationSettings {
     @FXML
     private Slider sldAmountCell;
     @FXML
-    private Slider sldSizeCell;
+    private Slider sldCellSize;
     @FXML
-    private Slider sldSpeedCell;
+    private Slider sldCellSpeed;
     @FXML
     private Slider sldAmountVirus;
     @FXML
@@ -61,9 +61,16 @@ public class SimulationWindowController extends SimulationSettings {
     private Slider sldSpeedVirus;
     @FXML
     private Pane pane;
-    
-    
-   //Ammars Work
+    @FXML
+    private Button btnCustomVirus;
+    @FXML
+    private Slider sldInfectionRate;
+
+    boolean clickedCovidButton = false;
+    boolean clickedFluButton = false;
+    boolean clickedCustomButton = false;
+
+    //Ammars Work
 //    @FXML 
 //    private Label nbHCells;
 //    @FXML 
@@ -72,14 +79,27 @@ public class SimulationWindowController extends SimulationSettings {
 //    private Label percHCells;
 //    @FXML 
 //    private Label percVCells;
-    public void handleSubmit(){
+    public void handleSubmit() {
         //update cell size/radius
-        int newCellAmt = (int)sldAmountCell.getValue();
-        
+        disableControlButtons(false, true, true, true);
+        radius = (int) sldCellSize.getValue();
+        healthyDx = (int) sldCellSpeed.getValue();
+        healthyDy = (int) sldCellSpeed.getValue();
+        if (clickedCustomButton) {
+            convertHitCounter = (int) sldInfectionRate.getValue();
+            amountOfVirus = (int) sldAmountVirus.getValue();
+            virusRadius = (int) sldSizeVirus.getValue();
+            virusDx = (int) sldSpeedVirus.getValue();
+            virusDy = (int) sldSpeedVirus.getValue();
+        }
     }
-    
+
+    public void handleAddCustomVirus() {
+        clickedCustomButton = true;
+        disableVirusButtons(true, true, false);
+    }
     StopWatch sw;
-        SimulationSettings simSettings;
+    SimulationSettings simSettings;
 
     private boolean startVirusCovid = false;
     private boolean startVirusFlu = false;
@@ -96,6 +116,7 @@ public class SimulationWindowController extends SimulationSettings {
 
     @FXML
     public void initialize() {
+        disableControlButtons(true, true, true, false);
         simSettings = new SimulationSettings();
         sw = new StopWatch();
         createAnimation();
@@ -109,16 +130,25 @@ public class SimulationWindowController extends SimulationSettings {
     }
 
     public void generateCells() {
+        numberOfCells = (int) sldAmountCell.getValue();
         for (int i = 0; i < numberOfCells; i++) {
             addHealhyCell();
         }
     }
 
-    private void disableControlButtons(boolean play, boolean pause, boolean stop) {
+    private void disableControlButtons(boolean play, boolean pause, boolean stop, boolean submit) {
         btnStart.setDisable(play);
         btnPause.setDisable(pause);
         btnReset.setDisable(stop);
     }
+
+    public void disableVirusButtons(boolean covid, boolean flu, boolean custom) {
+        btnCustomVirus.setDisable(custom);
+        btnAddCovidVirus.setDisable(covid);
+        btnAddFluVirus.setDisable(flu);
+
+    }
+
     public void ChosenVirus() {
     }
 
@@ -141,7 +171,7 @@ public class SimulationWindowController extends SimulationSettings {
             timeline.stop();
             sw.stop();
             System.out.println("Full Animation Time " + sw.getTime(TimeUnit.SECONDS) + " Seconds.");
-            disableControlButtons(true, true, false);
+            disableControlButtons(false, true, false, false);
         }
     }
 
@@ -149,25 +179,28 @@ public class SimulationWindowController extends SimulationSettings {
         if (startBtnCounter == 0) {
             generateCells();
         }
-        disableControlButtons(true, false, false);
+        generateCells();
+        addCustomVirusCell(virusRadius, virusDx, virusDy, amountOfVirus);
+        disableControlButtons(true, false, false, true);
         timeline.play();
         startBtnCounter++;
         sw.start();
     }
 
     public void handleStop() {
-        disableControlButtons(false, true, false);
+        disableControlButtons(false, true, false, true);
         timeline.pause();
         sw.stop();
     }
 
     public void handleReset() {
-        disableControlButtons(false, true, true);
+        disableControlButtons(true, true, true, false);
         for (Cell c : cellsArrayList) {
             pane.getChildren().remove(c);
         }
         cellsArrayList.removeAll(cellsArrayList);
-        generateCells();
+        disableVirusButtons(false, false, false);
+        handleSubmit();
         timeline.stop();
         sw.reset();
     }
@@ -185,8 +218,6 @@ public class SimulationWindowController extends SimulationSettings {
     public void handleAddHealthyCell() {
         addHealhyCell();
     }
-    
-    
 
     private void handleUpdateAnimation() {
         moveBall();
@@ -211,19 +242,24 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 //Turn into Custom and change settings based on user.
-    public void addCustomCell() {
-        VirusCell vc = new VirusCell();
-        cellX = randomThingy.nextInt((int) pane.getWidth());
-        cellY = randomThingy.nextInt((int) pane.getHeight());
-        vc.setRadius(radius);
-        vc.setDx(healthyDx);
-        vc.setDy(healthyDy);
-        vc.setCenterX(cellX);
-        vc.setCenterY(cellY);
-        cellsArrayList.add(vc);
-        pane.getChildren().add(vc);
-        recenterCells();
-        borderSpawnCorrection(vc);
+
+    public void addCustomVirusCell(int radius, int Dx, int Dy, int amount) {
+        for (int i = 0; i < amount; i++) {
+            VirusCell vc = new VirusCell();
+            cellX = randomThingy.nextInt((int) pane.getWidth());
+            cellY = randomThingy.nextInt((int) pane.getHeight());
+            vc.setRadius(radius);
+            vc.setDx(healthyDx);
+            vc.setDy(healthyDy);
+            vc.setCenterX(cellX);
+            vc.setCenterY(cellY);
+            vc.setFill(Color.RED);
+            cellsArrayList.add(vc);
+            pane.getChildren().add(vc);
+            recenterCells();
+            borderSpawnCorrection(vc);
+        }
+
     }
 
     //Double the speed of healthy Cells
@@ -299,7 +335,6 @@ public class SimulationWindowController extends SimulationSettings {
                         //doesnt work all the time
 
                         if (a instanceof HealthyCell && b instanceof VirusCell) {
-
                             a.setHitCounter(a.getHitCounter() + 1);
                             if (a.getHitCounter() == convertHitCounter) {
                                 healhtyToVirus(a, (VirusCell) b);
@@ -332,8 +367,7 @@ public class SimulationWindowController extends SimulationSettings {
             pane.getChildren().add(vc);
             pane.getChildren().remove(c);
             recenterCells();
-        }
-        if (a instanceof FluVirus) {
+        } else if (a instanceof FluVirus) {
             FluVirus vc = new FluVirus();
             cellX = c.getCenterX();
             cellY = c.getCenterY();
@@ -346,7 +380,24 @@ public class SimulationWindowController extends SimulationSettings {
             pane.getChildren().add(vc);
             pane.getChildren().remove(c);
             recenterCells();
+        } //custom virus
+        else {
+            VirusCell vc = new VirusCell();
+            vc.setCenterX(c.getCenterX());
+            vc.setCenterY(c.getCenterY());
+            vc.setRadius(virusRadius);
+            vc.setDx(virusDx);
+            vc.setDy(virusDy);
+            vc.setFill(Color.RED);
+            cellsArrayList.add(vc);
+            pane.getChildren().add(vc);
+            recenterCells();
+            borderSpawnCorrection(vc);
+            cellsArrayList.remove(c);
+            pane.getChildren().remove(c);
+            recenterCells();
         }
+
     }
 
     private void recenterCells() {
@@ -385,7 +436,7 @@ public class SimulationWindowController extends SimulationSettings {
             c.setCenterY(c.getCenterY() - c.getRadius());
         }
     }
-    
+
     //Ammars work
 //    private ArrayList HCellsList;
 //    private void statsCounter(){
@@ -398,5 +449,4 @@ public class SimulationWindowController extends SimulationSettings {
 //            }
 //        }
 //    }
-
 }

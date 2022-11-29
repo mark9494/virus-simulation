@@ -23,14 +23,18 @@ public class SimulationSettings {
         this.healthyDx = direction.get(rand.nextInt(2));
         this.healthyDy = direction.get(rand.nextInt(2));
     }
-    protected int numberOfCells = 25;
-    protected int convertHitCounter = 1;
+    protected int numberOfCells;
+    protected int convertHitCounter;
     protected double currentRate = 10;
     protected double cellX = 20;
     protected double cellY = 20;
-    protected int healthyDx = 1;
-    protected int healthyDy = 1;
-    protected int radius = 15;
+    protected int healthyDx;
+    protected int healthyDy;
+    protected int radius;
+    protected int virusRadius;
+    protected int virusDx;
+    protected int virusDy;
+    protected int amountOfVirus;
     protected double animationDuration = 50;
 
 }

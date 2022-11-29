@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <HBox fx:id="bottomBar" prefHeight="102.0" prefWidth="602.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="bottomBar" prefHeight="173.0" prefWidth="834.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleStart" prefHeight="40.0" prefWidth="90.0" text="Start">
                <HBox.margin>
@@ -44,7 +44,7 @@
       </HBox>
    </bottom>
    <right>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox prefHeight="691.0" prefWidth="220.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Features Pane" wrappingWidth="170.13671875">
                <font>
@@ -70,11 +70,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btnAddHealthyCell" mnemonicParsing="false" onAction="#handleAddHealthyCell" text="Add Healthy Cell">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
-               </VBox.margin></Button>
-            <Slider max="150.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldAmountCell" max="150.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -87,7 +83,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldCellSize" majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -100,7 +96,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldCellSpeed" majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -118,10 +114,19 @@
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Label>
+            <Button fx:id="btnAddCovidVirus" mnemonicParsing="false" onAction="#handleAddCovidVirus" text="Add Covid Virus">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin></Button>
             <Button fx:id="btnAddFluVirus" mnemonicParsing="false" onAction="#handleAddFluVirus" text="Add Flu Virus">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin></Button>
+            <Button fx:id="btnCustomVirus" mnemonicParsing="false" onAction="#handleAddCustomVirus" text="Custom Virus">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Button>
             <Label minWidth="50.0" prefHeight="21.0" prefWidth="30.0" text="Amount">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
@@ -130,7 +135,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldAmountVirus" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -143,7 +148,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldSizeVirus" majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -156,7 +161,20 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldSpeedVirus" majorTickUnit="5.0" max="20.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Infection">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="sldInfectionRate" majorTickUnit="1.0" max="8.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -166,10 +184,6 @@
                   <Insets bottom="5.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Separator>
-            <Button fx:id="btnAddCovidVirus" mnemonicParsing="false" onAction="#handleAddCovidVirus" text="Add Covid Virus">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
-               </VBox.margin></Button>
             <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#handleSubmit" text="Submit">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" />
@@ -179,7 +193,7 @@
       </VBox>
    </right>
    <top>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="118.0" prefWidth="834.0" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <Pane fx:id="pane" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: black; -fx-border-width: 4;" BorderPane.alignment="CENTER" />
