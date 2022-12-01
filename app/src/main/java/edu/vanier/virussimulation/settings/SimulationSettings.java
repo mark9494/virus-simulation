@@ -6,6 +6,7 @@ package edu.vanier.virussimulation.settings;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -34,6 +35,7 @@ public class SimulationSettings {
     protected int virusRadius;
     protected int virusDx;
     protected int virusDy;
+    protected Color virusColor;
     protected int amountOfVirus;
     protected double animationDuration = 50;
 

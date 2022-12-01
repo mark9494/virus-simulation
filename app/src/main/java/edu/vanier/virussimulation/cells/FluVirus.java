@@ -20,7 +20,7 @@ public class FluVirus extends VirusCell {
 //3 hits(less contagious, 700 times(0.7) smaller relative size)
     public FluVirus() {
         Image virus = new Image("/images/Red_Virus.png", false);
-        hitCounter = 1;
+        hitCounter = 3;
         this.setFill(new ImagePattern(virus));
         this.setRadius(14);
     }
