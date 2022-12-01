@@ -140,12 +140,16 @@ public abstract class GameEngine {
         // check each sprite against other sprite objects.
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
             for (Sprite spriteB : spriteManager.getAllSprites()) {
+                if(spriteA ==spriteB){
+                   break; 
+                }
                 if (handleCollision(spriteA, spriteB)) {
-                    // The break helps optimize the collisions
-                    //  The break statement means one object only hits another
-                    // object as opposed to one hitting many objects.
-                    // To be more accurate comment out the break statement.
-                    break;
+                    
+                   spriteA.handleDeath(this);
+                   spriteB.handleDeath(this);
+                    
+                            
+                     break;
                 }
             }
         }

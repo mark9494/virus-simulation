@@ -272,6 +272,24 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
+        
+        if(spriteA.collide(spriteB)){
+            
+            if(spriteA instanceof Missile && spriteB instanceof Missile){
+             return false;   
+            }
+           if(spriteA instanceof Missile && spriteB instanceof Atom){
+              
+             return true; 
+           
+           }else if(spriteB instanceof Missile && spriteA instanceof Atom) {
+               
+            return true; 
+               
+           }
+           
+           return false; 
+        }
 
         return false;
     }
