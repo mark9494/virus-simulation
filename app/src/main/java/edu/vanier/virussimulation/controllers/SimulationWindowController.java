@@ -225,7 +225,7 @@ public class SimulationWindowController extends SimulationSettings {
             a.showAndWait();
             return;
         }
-        if (cellsArrayList.size() > 0) {
+        if (!cellsArrayList.isEmpty()) {
             for (Cell c : cellsArrayList) {
                 pane.getChildren().remove(c);
             }
@@ -307,8 +307,8 @@ public class SimulationWindowController extends SimulationSettings {
             cellX = randomThingy.nextInt((int) pane.getWidth());
             cellY = randomThingy.nextInt((int) pane.getHeight());
             vc.setRadius(radius);
-            vc.setDx(healthyDx);
-            vc.setDy(healthyDy);
+            vc.setDx(Dx);
+            vc.setDy(Dy);
             vc.setCenterX(cellX);
             vc.setCenterY(cellY);
             vc.setFill(color);

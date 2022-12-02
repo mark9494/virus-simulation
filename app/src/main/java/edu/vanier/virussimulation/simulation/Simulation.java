@@ -17,10 +17,10 @@ public class Simulation extends Application {
         SimulationWindowController swc = new SimulationWindowController();
         loader.setController(swc);
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1000.0, 1000.0);
+        Scene scene = new Scene(root, 1500.0, 1000.0);
         stage.setScene(scene);
         
-        stage.setTitle("Virus Simulation");
+        stage.setTitle("Virus_Simulation");
         stage.sizeToScene();
         stage.show();
     }
