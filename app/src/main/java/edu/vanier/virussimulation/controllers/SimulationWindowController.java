@@ -84,14 +84,15 @@ public class SimulationWindowController extends SimulationSettings {
     boolean clickedCustomButton = false;
 
     //Ammars Work
-    @FXML 
+    @FXML
     private Label nbHCells;
-    @FXML 
+    @FXML
     private Label nbVCells;
-    @FXML 
+    @FXML
     private Label percHCells;
-    @FXML 
+    @FXML
     private Label percVCells;
+
     StopWatch sw;
     SimulationSettings simSettings;
 
@@ -503,29 +504,44 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
-    //Ammars work
-private ArrayList HCellsList = new ArrayList();
+    private ArrayList HCellsList = new ArrayList();
     private ArrayList VCellsList = new ArrayList();
-    
-    
-    private void statsCounter(){
-        for(Cell c: cellsArrayList){
-            
-            if(c instanceof HealthyCell){
+
+    private void statsCounter() {
+        for (Cell c : cellsArrayList) {
+
+            if (c instanceof HealthyCell) {
                 this.HCellsList.add(c);
-            }else if(c instanceof VirusCell){
-                this.VCellsList.add(c);   
+            } else if (c instanceof VirusCell) {
+                this.VCellsList.add(c);
             }
         }
-        nbHCells.setText(this.HCellsList.size() + "");
-        nbVCells.setText(this.VCellsList.size() + "");
-        int percentage = (HCellsList.size()/cellsArrayList.size()) * 100;
-        System.out.println(percentage);
-        percHCells.setText( percentage + "%");
-        percVCells.setText((VCellsList.size()/cellsArrayList.size()) * 100 + "%");
-        System.out.println();
-        this.HCellsList.removeAll(this.HCellsList);
-        this.VCellsList.removeAll(this.VCellsList);
-        
+        int healthyArraySize = this.HCellsList.size();
+        int cellsArraySize = this.cellsArrayList.size();
+        int virusArraySize = this.VCellsList.size();
+        nbHCells.setText(
+                healthyArraySize + "");
+        nbVCells.setText(
+                virusArraySize + "");
+        //Healthy cell percentage
+        int healthyPercentage = 0;
+     //   if (!this.cellsArrayList.isEmpty()) {
+            healthyPercentage = (healthyArraySize / cellsArraySize) * 100;
+      //  }
+        percHCells.setText(healthyPercentage + "%");
+        //Virus Percentage
+        int virusPercentage = 0;
+       // if (!this.cellsArrayList.isEmpty()) {
+            virusPercentage = (virusArraySize / cellsArraySize * 100);
+       // }
+        System.out.println(healthyArraySize/ cellsArraySize);
+        percVCells.setText(virusPercentage + "%");
+
+        this.HCellsList.removeAll(
+                this.HCellsList);
+
+        this.VCellsList.removeAll(
+                this.VCellsList);
+
     }
 }
