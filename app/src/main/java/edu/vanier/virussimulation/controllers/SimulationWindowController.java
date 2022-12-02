@@ -23,7 +23,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -79,11 +78,8 @@ public class SimulationWindowController extends SimulationSettings {
     private VBox vBox;
     @FXML
     private ColorPicker colorPicker;
-    boolean clickedCovidButton = false;
-    boolean clickedFluButton = false;
-    boolean clickedCustomButton = false;
-
-    //Ammars Work
+    @FXML
+    private Label txtCurrentTime;
     @FXML
     private Label nbHCells;
     @FXML
@@ -93,20 +89,18 @@ public class SimulationWindowController extends SimulationSettings {
     @FXML
     private Label percVCells;
 
-    StopWatch sw;
+    boolean clickedCovidButton = false;
+    boolean clickedFluButton = false;
+    boolean clickedCustomButton = false;
+
+    public static StopWatch sw = new StopWatch();
+
     SimulationSettings simSettings;
 
-//    private boolean startVirusCovid = false;
-//    private boolean startVirusFlu = false;
-//    private boolean startVirusCustom = false;
     final private Random randomThingy = new Random();
 
-    Timeline timeline;
+    public static Timeline timeline;
     protected ArrayList<Cell> cellsArrayList = new ArrayList<Cell>();
-
-    public SimulationWindowController() {
-
-    }
 
     @FXML
     public void initialize() {
@@ -118,7 +112,6 @@ public class SimulationWindowController extends SimulationSettings {
             recenterCells();
         });
         pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            //System.out.println("RESIZING THE PANE HEIGHT");
             recenterCells();
         });
     }
@@ -159,9 +152,6 @@ public class SimulationWindowController extends SimulationSettings {
         sldAmountCell.setValue(0);
         sldCellSize.setValue(0);
         sldCellSpeed.setValue(0);
-    }
-
-    public void ChosenVirus() {
     }
 
     public void createAnimation() {
@@ -212,6 +202,8 @@ public class SimulationWindowController extends SimulationSettings {
         if (tglResetSlider.isSelected()) {
             setSlidersDefault();
         }
+        txtCurrentTime.setText("");
+        colorPicker.setDisable(false);
         cellsArrayList.removeAll(cellsArrayList);
         disableControlButtons(true, true, true, false);
         disableVirusButtons(false, false, false);
@@ -263,6 +255,7 @@ public class SimulationWindowController extends SimulationSettings {
         clickedCovidButton = true;
         disableVirusButtons(false, true, true);
         disableVirusSliders(false, true, true, true);
+        colorPicker.setDisable(true);
     }
 
     public void handleAddCustomVirus() {
@@ -274,6 +267,7 @@ public class SimulationWindowController extends SimulationSettings {
         clickedFluButton = true;
         disableVirusButtons(true, false, true);
         disableVirusSliders(false, true, true, true);
+        colorPicker.setDisable(true);
     }
 
     public void handleAddHealthyCell() {
@@ -285,6 +279,7 @@ public class SimulationWindowController extends SimulationSettings {
         collide();
         endSimulation();
         statsCounter();
+        updateTimer();
     }
 
     public void addHealhyCell() {
@@ -504,38 +499,44 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
-    private ArrayList HCellsList = new ArrayList();
-    private ArrayList VCellsList = new ArrayList();
+    final ArrayList HCellsList = new ArrayList();
+    final ArrayList VCellsList = new ArrayList();
 
     private void statsCounter() {
         for (Cell c : cellsArrayList) {
-
             if (c instanceof HealthyCell) {
                 this.HCellsList.add(c);
             } else if (c instanceof VirusCell) {
                 this.VCellsList.add(c);
             }
         }
-        int healthyArraySize = this.HCellsList.size();
-        int cellsArraySize = this.cellsArrayList.size();
-        int virusArraySize = this.VCellsList.size();
+        double healthyArraySize = this.HCellsList.size();
+        double cellsArraySize = this.cellsArrayList.size();
+        double virusArraySize = this.VCellsList.size();
+
         nbHCells.setText(
-                healthyArraySize + "");
+                (int) healthyArraySize
+                + "");
         nbVCells.setText(
-                virusArraySize + "");
+                (int) virusArraySize + "");
         //Healthy cell percentage
-        int healthyPercentage = 0;
-     //   if (!this.cellsArrayList.isEmpty()) {
+        double healthyPercentage = 0;
+
+        if (!this.cellsArrayList.isEmpty()) {
             healthyPercentage = (healthyArraySize / cellsArraySize) * 100;
-      //  }
-        percHCells.setText(healthyPercentage + "%");
+        }
+
+        percHCells.setText(
+                (int) healthyPercentage + "%");
         //Virus Percentage
-        int virusPercentage = 0;
-       // if (!this.cellsArrayList.isEmpty()) {
+        double virusPercentage = 0;
+
+        if (!this.cellsArrayList.isEmpty()) {
             virusPercentage = (virusArraySize / cellsArraySize * 100);
-       // }
-        System.out.println(healthyArraySize/ cellsArraySize);
-        percVCells.setText(virusPercentage + "%");
+        }
+
+        percVCells.setText(
+                (int) virusPercentage + "%");
 
         this.HCellsList.removeAll(
                 this.HCellsList);
@@ -543,5 +544,10 @@ public class SimulationWindowController extends SimulationSettings {
         this.VCellsList.removeAll(
                 this.VCellsList);
 
+    }
+
+    private void updateTimer() {
+        long miliseconds = (sw.getTime(TimeUnit.MILLISECONDS)) - ((sw.getTime(TimeUnit.SECONDS)) * 1000);
+        txtCurrentTime.setText(sw.getTime(TimeUnit.MINUTES) + " Minutes " + sw.getTime(TimeUnit.SECONDS) + " Seconds " + miliseconds + " miliseconds");
     }
 }

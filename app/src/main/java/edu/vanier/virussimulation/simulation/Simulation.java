@@ -19,10 +19,18 @@ public class Simulation extends Application {
         Pane root = loader.load();
         Scene scene = new Scene(root, 1500.0, 1000.0);
         stage.setScene(scene);
-        
+
         stage.setTitle("Virus_Simulation");
         stage.sizeToScene();
         stage.show();
+    }
+
+    public void stop() {
+        if (SimulationWindowController.sw.isStarted()) {
+            SimulationWindowController.sw.stop();
+        }
+
+        SimulationWindowController.timeline.stop();
     }
 
     public static void main(String[] args) {

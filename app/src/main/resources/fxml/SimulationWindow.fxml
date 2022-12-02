@@ -15,13 +15,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <HBox fx:id="bottomBar" prefHeight="44.0" prefWidth="1015.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="bottomBar" prefHeight="23.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnStart" mnemonicParsing="false" onAction="#handleStart" prefHeight="40.0" prefWidth="90.0" text="Start">
                <HBox.margin>
-                  <Insets left="30.0" top="50.0" />
+                  <Insets bottom="20.0" left="30.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font size="20.0" />
@@ -29,7 +29,7 @@
             </Button>
             <Button fx:id="btnPause" mnemonicParsing="false" onAction="#handleStop" prefHeight="40.0" prefWidth="90.0" text="Stop">
                <HBox.margin>
-                  <Insets left="30.0" top="50.0" />
+                  <Insets bottom="20.0" left="30.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font size="20.0" />
@@ -37,24 +37,43 @@
             </Button>
             <Button fx:id="btnReset" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="84.0" text="Reset">
                <HBox.margin>
-                  <Insets left="30.0" top="50.0" />
+                  <Insets bottom="20.0" left="30.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
+            <Label prefHeight="52.0" prefWidth="147.0" text="Current Time: ">
+               <HBox.margin>
+                  <Insets left="80.0" top="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="txtCurrentTime" prefHeight="48.0" prefWidth="390.0">
+               <HBox.margin>
+                  <Insets right="20.0" top="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
    </bottom>
    <right>
-      <VBox fx:id="vBox" prefHeight="811.0" prefWidth="276.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBox" prefHeight="867.0" prefWidth="276.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Features Pane" wrappingWidth="170.13671875">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Text>
             <Label minWidth="36.0" prefHeight="20.0" prefWidth="50.0" text="Cell">
@@ -62,7 +81,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Label>
             <ToggleButton fx:id="tglResetSlider" mnemonicParsing="false" text="Reset slider">
@@ -70,12 +89,12 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </ToggleButton>
             <Label minWidth="50.0" prefHeight="21.0" prefWidth="30.0" text="Amount">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -83,12 +102,12 @@
             </Label>
             <Slider fx:id="sldAmountCell" majorTickUnit="20.0" max="150.0" min="10.0" minorTickCount="5" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Label text="Size">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -96,12 +115,12 @@
             </Label>
             <Slider fx:id="sldCellSize" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Label text="Speed">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -109,12 +128,12 @@
             </Label>
             <Slider fx:id="sldCellSpeed" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Separator prefWidth="200.0">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Separator>
             <Label text="Virus">
@@ -122,26 +141,26 @@
                   <Font name="System Bold" size="17.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Label>
             <Button fx:id="btnAddCovidVirus" mnemonicParsing="false" onAction="#handleAddCovidVirus" text="Add Covid Virus">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
                   <Tooltip text="Covid Virus" />
                </tooltip></Button>
             <Button fx:id="btnAddFluVirus" mnemonicParsing="false" onAction="#handleAddFluVirus" text="Add Flu Virus">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
                   <Tooltip text="Flu Virus" />
                </tooltip></Button>
             <Button fx:id="btnCustomVirus" mnemonicParsing="false" onAction="#handleAddCustomVirus" text="Custom Virus">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
                   <Tooltip text="Create your own virus" />
@@ -149,7 +168,7 @@
             </Button>
             <Label minWidth="50.0" prefHeight="21.0" prefWidth="30.0" text="Amount">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -157,12 +176,12 @@
             </Label>
             <Slider fx:id="sldAmountVirus" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Label text="Size">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -170,12 +189,12 @@
             </Label>
             <Slider fx:id="sldSizeVirus" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Label text="Speed">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
@@ -183,7 +202,7 @@
             </Label>
             <Slider fx:id="sldSpeedVirus" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
             <Label text="Infection">
@@ -191,37 +210,37 @@
                   <Font size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Label>
             <Slider fx:id="sldInfectionRate" majorTickUnit="1.0" max="8.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
-            <ColorPicker fx:id="colorPicker" prefHeight="29.0" prefWidth="125.0">
+            <ColorPicker fx:id="colorPicker" prefHeight="25.0">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </ColorPicker>
-            <Separator prefWidth="200.0">
+            <Separator prefHeight="0.0" prefWidth="256.0">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Separator>
             <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#handleSubmit" text="Submit">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
+                  <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
    </right>
    <center>
-      <Pane fx:id="pane" prefHeight="585.0" prefWidth="735.0" style="-fx-border-color: black; -fx-border-width: 4;" BorderPane.alignment="CENTER" />
+      <Pane fx:id="pane" prefHeight="706.0" prefWidth="768.0" style="-fx-border-color: black; -fx-border-width: 4;" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="183.0" prefWidth="983.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="29.0" layoutY="105.0" text="# of Healthy Cells:">
                <font>
@@ -233,12 +252,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="295.0" layoutY="105.0" text="\% of Helathy Cells:">
+            <Label layoutX="295.0" layoutY="105.0" text="\% of Healthy Cells:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="percHCells" layoutX="485.0" layoutY="105.0" text="Label">
+            <Label fx:id="percHCells" layoutX="485.0" layoutY="105.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -258,9 +277,14 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="percVCells" layoutX="485.0" layoutY="148.0" text="Label">
+            <Label fx:id="percVCells" layoutX="485.0" layoutY="148.0">
                <font>
                   <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="23.0" text="Virus Simulation">
+               <font>
+                  <Font name="System Bold" size="47.0" />
                </font>
             </Label>
          </children>
