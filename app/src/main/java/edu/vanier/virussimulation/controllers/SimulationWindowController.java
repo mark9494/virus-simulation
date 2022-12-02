@@ -93,7 +93,7 @@ public class SimulationWindowController extends SimulationSettings {
     boolean clickedFluButton = false;
     boolean clickedCustomButton = false;
 
-    public static StopWatch sw = new StopWatch();
+    public static StopWatch sw ;
 
     SimulationSettings simSettings;
 
@@ -107,6 +107,8 @@ public class SimulationWindowController extends SimulationSettings {
         disableControlButtons(true, true, true, false);
         simSettings = new SimulationSettings();
         sw = new StopWatch();
+        sw.start();
+        sw.suspend();
         createAnimation();
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterCells();
@@ -171,7 +173,8 @@ public class SimulationWindowController extends SimulationSettings {
         }
         if (!isHealthyLeft) {
             timeline.stop();
-            sw.stop();
+            sw.suspend();
+            sw.reset();
             System.out.println("Full Animation Time " + sw.getTime(TimeUnit.SECONDS) + " Seconds.");
             disableControlButtons(true, true, false, false);
         }
@@ -181,14 +184,19 @@ public class SimulationWindowController extends SimulationSettings {
         disableControlButtons(true, false, false, true);
         timeline.play();
         vBox.setDisable(true);
+        
+       sw.resume();
+        
+        
         startBtnCounter++;
-        sw.start();
+       
+        
     }
 
     public void handleStop() {
         disableControlButtons(false, true, false, true);
         timeline.pause();
-        sw.stop();
+        sw.suspend();
     }
 
     public void handleReset() {
@@ -196,6 +204,7 @@ public class SimulationWindowController extends SimulationSettings {
         clickedFluButton = false;
         clickedCovidButton = false;
         vBox.setDisable(false);
+       
         for (Cell c : cellsArrayList) {
             pane.getChildren().remove(c);
         }
@@ -209,7 +218,11 @@ public class SimulationWindowController extends SimulationSettings {
         disableVirusButtons(false, false, false);
         disableVirusSliders(false, false, false, false);
         timeline.stop();
+        
+        
         sw.reset();
+        sw.start();
+        sw.suspend();// we need all these methods called, otherwise the stopwatch won't work
         statsCounter();
     }
 
@@ -249,6 +262,8 @@ public class SimulationWindowController extends SimulationSettings {
             createFluVirus(numberOfVirus);
         }
         generateCells();
+        
+        
     }
 
     public void handleAddCovidVirus() {

@@ -12,12 +12,12 @@ public class Simulation extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //WelcomeScreenController welcomeScreen = new WelcomeScreenController();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/SimulationWindow.fxml"));
-        SimulationWindowController swc = new SimulationWindowController();
-        loader.setController(swc);
+        WelcomeScreenController welcomeScreen = new WelcomeScreenController();
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/WelcomeScreen.fxml"));
+        
+        loader.setController(welcomeScreen);
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1500.0, 1000.0);
+        Scene scene = new Scene(root, 600, 370);
         stage.setScene(scene);
 
         stage.setTitle("Virus_Simulation");
