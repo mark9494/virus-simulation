@@ -153,9 +153,7 @@ public abstract class GameEngine {
              
             for (Sprite spriteB : spriteManager.getAllSprites()) {
                
-                if(spriteA ==spriteB){
-                   break; 
-                }
+                
                 if (handleCollision(spriteA, spriteB)) {
                    // System.out.println(spriteA.getNode().getTranslateX()); //spriteA is always the missile and SpriteB is always theAtom
                   
