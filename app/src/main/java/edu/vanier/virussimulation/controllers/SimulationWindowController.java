@@ -174,7 +174,7 @@ public class SimulationWindowController extends SimulationSettings {
         if (!isHealthyLeft) {
             timeline.stop();
             sw.suspend();
-            sw.reset();
+            
             System.out.println("Full Animation Time " + sw.getTime(TimeUnit.SECONDS) + " Seconds.");
             disableControlButtons(true, true, false, false);
         }
