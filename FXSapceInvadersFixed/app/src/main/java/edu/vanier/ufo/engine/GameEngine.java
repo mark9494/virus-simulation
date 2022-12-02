@@ -1,5 +1,9 @@
 package edu.vanier.ufo.engine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -80,8 +86,12 @@ public abstract class GameEngine {
         EventHandler<ActionEvent> onFinished = (event) -> {
             // update actors
             updateSprites();
-            // check for collision.
-             checkCollisions();
+            try {
+                // check for collision.
+                checkCollisions();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
+            }
             // removed dead sprites.
             cleanupSprites();
         };
@@ -129,25 +139,33 @@ public abstract class GameEngine {
 
     /**
      * Checks each game sprite in the game world to determine a collision
-     * occurred. The method will loop through each sprite and passing it to the
-     * handleCollision() method. The derived class should override
-     * handleCollision() method.
+     * occurred.The method will loop through each sprite and passing it to the
+ handleCollision() method. The derived class should override
+ handleCollision() method.
+     * @throws java.io.FileNotFoundException
      */
-    protected void checkCollisions() {
+    protected void checkCollisions() throws FileNotFoundException {
         //FIXME: handle collision with the spaceship.
         // check other sprite's collisions
         spriteManager.resetCollisionsToCheck();
         // check each sprite against other sprite objects.
         for (Sprite spriteA : spriteManager.getCollisionsToCheck()) {
+             
             for (Sprite spriteB : spriteManager.getAllSprites()) {
+               
                 if(spriteA ==spriteB){
                    break; 
                 }
                 if (handleCollision(spriteA, spriteB)) {
+                   // System.out.println(spriteA.getNode().getTranslateX()); //spriteA is always the missile and SpriteB is always theAtom
+                  
+                          //    System.out.println(spriteB);
                     
+                   
+                   
                    spriteA.handleDeath(this);
                    spriteB.handleDeath(this);
-                    
+                   
                             
                      break;
                 }

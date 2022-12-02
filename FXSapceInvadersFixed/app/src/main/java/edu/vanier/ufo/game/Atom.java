@@ -60,6 +60,12 @@ public class Atom extends Sprite {
         vX = vY = 0;
         Node currentNode = getNode();
         /* TODO: fix this code to add explosing effect*/
+        Image image = new Image(("/images/explosion.gif"));     
+                    
+                   ImageView imageView = new ImageView(image);
+                   imageView.setX(this.getNode().getTranslateX());
+                   imageView.setY(this.getNode().getTranslateY());
+                   gameWorld.getSceneNodes().getChildren().add(imageView);
         //Sprite explosion = new Atom(ResourcesManager.ROCKET_FIRE);                
         //gameWorld.getSceneNodes().getChildren().add(explosion.getNode());
         FadeTransition ft = new FadeTransition(Duration.millis(300), currentNode);
@@ -74,6 +80,7 @@ public class Atom extends Sprite {
 
     @Override
     public void handleDeath(GameEngine gameWorld) {
+        
         implode(gameWorld);
         super.handleDeath(gameWorld);
     }

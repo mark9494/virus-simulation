@@ -34,7 +34,10 @@ public class ResourcesManager {
     public static final String INVADER_SCI_FI = IMAGES_FOLDER + "sci-fi.png";
 
     // Sound effect files
-    public static final String SOUND_LASER = SOUNDS_FOLDER + "laser_2.mp3";    
+    public static final String SOUND_LASER = SOUNDS_FOLDER + "laser_2.mp3"; 
+    public static final String SOUND_DESTRUCTION = SOUNDS_FOLDER + "invaderExplosion.wav"; 
+    
+    
     //public static final String SOUND_LASER = SOUNDS_FOLDER + "alienMove2.wav";    
     
     

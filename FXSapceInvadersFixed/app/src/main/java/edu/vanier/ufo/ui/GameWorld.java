@@ -87,6 +87,7 @@ public class GameWorld extends GameEngine {
 
         // load sound files
         getSoundManager().loadSoundEffects("laser", getClass().getClassLoader().getResource(ResourcesManager.SOUND_LASER));
+        getSoundManager().loadSoundEffects("destruction", getClass().getClassLoader().getResource(ResourcesManager.SOUND_DESTRUCTION));
     }
 
     /**
@@ -276,17 +277,21 @@ public class GameWorld extends GameEngine {
         if(spriteA.collide(spriteB)){
             
             if(spriteA instanceof Missile && spriteB instanceof Missile){
-             return false;   
-            }
-           if(spriteA instanceof Missile && spriteB instanceof Atom){
-              
-             return true; 
+             
+                return false;   
+            
+            }else if(spriteA instanceof Missile && spriteB instanceof Atom){// an Atom can be a missile in this case
+              getSoundManager().playSound("destruction");                   // thats why we have the first if statement
+             return true;                                                   // This way if the first if is not true then the atom can't be a missile because we already checked
            
            }else if(spriteB instanceof Missile && spriteA instanceof Atom) {
-               
+               getSoundManager().playSound("destruction");
             return true; 
                
            }
+           
+            
+           
            
            return false; 
         }
