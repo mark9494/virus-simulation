@@ -407,7 +407,7 @@ public class SimulationWindowController extends SimulationSettings {
                         a.setCenterY(a.getDy() + a.getCenterY());
                         b.setCenterX(b.getDx() + b.getCenterX());
                         b.setCenterY(b.getDy() + b.getCenterY());
-                        //doesnt work all the time
+                        
 
                         if (a instanceof HealthyCell && b instanceof VirusCell) {
                             a.setHitCounter(a.getHitCounter() + 1);

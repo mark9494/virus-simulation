@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox fx:id="bottomBar" prefHeight="23.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
          <children>
@@ -149,14 +149,14 @@
                   <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
-                  <Tooltip text="Covid Virus" />
+                  <Tooltip text="Infection =1 ;Size =20;" />
                </tooltip></Button>
             <Button fx:id="btnAddFluVirus" mnemonicParsing="false" onAction="#handleAddFluVirus" text="Add Flu Virus">
                <VBox.margin>
                   <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
-                  <Tooltip text="Flu Virus" />
+                  <Tooltip text="Infection=3 ; size =14" />
                </tooltip></Button>
             <Button fx:id="btnCustomVirus" mnemonicParsing="false" onAction="#handleAddCustomVirus" text="Custom Virus">
                <VBox.margin>
