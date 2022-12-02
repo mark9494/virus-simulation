@@ -20,6 +20,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
@@ -83,14 +84,14 @@ public class SimulationWindowController extends SimulationSettings {
     boolean clickedCustomButton = false;
 
     //Ammars Work
-//    @FXML 
-//    private Label nbHCells;
-//    @FXML 
-//    private Label nbVCells;
-//    @FXML 
-//    private Label percHCells;
-//    @FXML 
-//    private Label percVCells;
+    @FXML 
+    private Label nbHCells;
+    @FXML 
+    private Label nbVCells;
+    @FXML 
+    private Label percHCells;
+    @FXML 
+    private Label percVCells;
     StopWatch sw;
     SimulationSettings simSettings;
 
@@ -216,6 +217,7 @@ public class SimulationWindowController extends SimulationSettings {
         disableVirusSliders(false, false, false, false);
         timeline.stop();
         sw.reset();
+        statsCounter();
     }
 
     public void handleSubmit() {
@@ -281,6 +283,7 @@ public class SimulationWindowController extends SimulationSettings {
         moveBall();
         collide();
         endSimulation();
+        statsCounter();
     }
 
     public void addHealhyCell() {
@@ -501,15 +504,28 @@ public class SimulationWindowController extends SimulationSettings {
     }
 
     //Ammars work
-//    private ArrayList HCellsList;
-//    private void statsCounter(){
-//        for(Cell c: cellsArrayList){
-//            if(c instanceof HealthyCell){
-//                this.HCellsList = new ArrayList();
-//                this.HCellsList.add(c);
-//            }else if(c instanceof VirusCell){
-//                
-//            }
-//        }
-//    }
+private ArrayList HCellsList = new ArrayList();
+    private ArrayList VCellsList = new ArrayList();
+    
+    
+    private void statsCounter(){
+        for(Cell c: cellsArrayList){
+            
+            if(c instanceof HealthyCell){
+                this.HCellsList.add(c);
+            }else if(c instanceof VirusCell){
+                this.VCellsList.add(c);   
+            }
+        }
+        nbHCells.setText(this.HCellsList.size() + "");
+        nbVCells.setText(this.VCellsList.size() + "");
+        int percentage = (HCellsList.size()/cellsArrayList.size()) * 100;
+        System.out.println(percentage);
+        percHCells.setText( percentage + "%");
+        percVCells.setText((VCellsList.size()/cellsArrayList.size()) * 100 + "%");
+        System.out.println();
+        this.HCellsList.removeAll(this.HCellsList);
+        this.VCellsList.removeAll(this.VCellsList);
+        
+    }
 }
