@@ -3,11 +3,23 @@ package edu.vanier.ufo.ui;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.*;
 import edu.vanier.ufo.game.*;
+import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import java.util.Random;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +42,7 @@ import javafx.scene.image.ImageView;
  * @author cdea
  */
 public class GameWorld extends GameEngine {
+     
 
     // mouse pt label
     Label mousePtLabel = new Label();
@@ -100,12 +113,17 @@ public class GameWorld extends GameEngine {
 
         EventHandler fireOrMove = (EventHandler<MouseEvent>) (MouseEvent event) -> {
             mousePressPtLabel.setText("Mouse Press PT = (" + event.getX() + ", " + event.getY() + ")");
+            
+            
+            
+            
             if (event.getButton() == MouseButton.PRIMARY) {
 
                 // Aim
                 spaceShip.plotCourse(event.getX(), event.getY(), false);
 
                 // fire
+                
                 Missile missile = spaceShip.fire();
                 getSpriteManager().addSprites(missile);
 
@@ -152,15 +170,34 @@ public class GameWorld extends GameEngine {
      * to generate.
      */
     private void generateManySpheres(int numSpheres) {
+        ArrayList<String> images = new ArrayList<>();
+        images.add(ResourcesManager.INVADER_SCI_FI);
+        images.add(ResourcesManager.INVADER_LARGE_SHIP);
+        images.add(ResourcesManager.INVADER_SMALL_SHIP);
+        images.add(ResourcesManager.INVADER_SCI_FI);
+        images.add(ResourcesManager.INVADER_SCI_FI);
         Random rnd = new Random();
         Scene gameSurface = getGameSurface();
         for (int i = 0; i < numSpheres; i++) {
-            Atom atom = new Atom(ResourcesManager.INVADER_SCI_FI);
+            Atom atom = new Atom(images.get(rnd.nextInt(images.size())));// picks random picture from arraylist for invader
             ImageView atomImage = atom.getImageViewNode();
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
-            atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
-            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
+            if(numberOfInvaders==5){
+                
+               atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
+            atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1)); 
+            }else if(numberOfInvaders==9){
+               
+                spaceShip.changeShip(ResourcesManager.SPACE_SHIP);
+               atom.setVelocityX((rnd.nextInt(4) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
+            atom.setVelocityY((rnd.nextInt(4) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));  
+            }else if(numberOfInvaders==13){
+                spaceShip.changeShip(ResourcesManager.SPACE_SHIP2);
+                atom.setVelocityX((rnd.nextInt(6) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
+            atom.setVelocityY((rnd.nextInt(6) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1)); 
+            }
+            
 
             // random x between 0 to width of scene
             double newX = rnd.nextInt((int) gameSurface.getWidth() - 100);
@@ -273,7 +310,15 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-        
+        if(numberOfInvaders!=13){
+        if(spriteManager.getAllSprites().size()==1){
+            numberOfInvaders +=4;
+            generateManySpheres(numberOfInvaders*2);
+            
+        }
+        }       
+                
+                
         if(spriteA.collide(spriteB)){
             
             if(spriteA instanceof Missile && spriteB instanceof Missile){

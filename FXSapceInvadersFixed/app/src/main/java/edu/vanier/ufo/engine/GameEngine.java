@@ -1,6 +1,5 @@
 package edu.vanier.ufo.engine;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,8 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,7 +27,7 @@ import javafx.util.Duration;
  * @author cdea
  */
 public abstract class GameEngine {
-
+    public static int numberOfInvaders = 5;
     /**
      * The JavaFX Scene as the game surface
      */
@@ -57,7 +54,7 @@ public abstract class GameEngine {
     /**
      * The sprite manager.
      */
-    private final SpriteManager spriteManager;
+    protected final SpriteManager spriteManager;
 
     private final SoundManager soundManager;
 
@@ -89,6 +86,7 @@ public abstract class GameEngine {
             try {
                 // check for collision.
                 checkCollisions();
+                
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -145,6 +143,11 @@ public abstract class GameEngine {
      * @throws java.io.FileNotFoundException
      */
     protected void checkCollisions() throws FileNotFoundException {
+        
+         
+        
+        
+        
         //FIXME: handle collision with the spaceship.
         // check other sprite's collisions
         spriteManager.resetCollisionsToCheck();

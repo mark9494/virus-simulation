@@ -1,5 +1,6 @@
 package edu.vanier.ufo.game;
 
+import edu.vanier.ufo.engine.GameEngine;
 import edu.vanier.ufo.helpers.ResourcesManager;
 import edu.vanier.ufo.engine.Sprite;
 import javafx.animation.*;
@@ -180,7 +181,7 @@ public class Ship extends Sprite {
         // set javafx node to an image
         firstShip.setVisible(true);
         setNode(flipBook);
-        flipBook.setTranslateX(350);
+        flipBook.setTranslateX(425);
         flipBook.setTranslateY(450);
         flipBook.setCache(true);
         flipBook.setCacheHint(CacheHint.SPEED);
@@ -451,13 +452,24 @@ public class Ship extends Sprite {
         Missile fireMissile;
         float slowDownAmt = 0;
         int scaleBeginningMissle;
-        if (KeyCode.DIGIT2 == keyCode) {
-            fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);
+//        if (KeyCode.DIGIT2 == keyCode) {
+//            fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);
+//            
+//            slowDownAmt = 1.3f;
+//            scaleBeginningMissle = 11;
+//        } 
+        if(GameEngine.numberOfInvaders==9){
+             fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);
+            
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
-        } else {
+        }
+        else if(GameEngine.numberOfInvaders==5){
             fireMissile = new Missile(ResourcesManager.ROCKET_SMALL);
             scaleBeginningMissle = 8;
+        }else{
+         fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);   
+           scaleBeginningMissle = 10; 
         }
 
         //fireMissile.setPosition(getNode().getLayoutX()+ 10, getNode().getLayoutY() - 20);
