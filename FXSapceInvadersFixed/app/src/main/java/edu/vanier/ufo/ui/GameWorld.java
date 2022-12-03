@@ -317,6 +317,16 @@ public class GameWorld extends GameEngine {
                 
         if(spriteA.collide(spriteB)){
             
+            if(spriteA instanceof Ship && spriteB instanceof Atom){
+                getSoundManager().playSound("destruction");
+                spriteB.handleDeath(this);
+                return false;
+            }else if(spriteB instanceof Ship && spriteA instanceof Atom){
+              getSoundManager().playSound("destruction");
+                spriteA.handleDeath(this);
+                return false;  
+            }
+            
             if(spriteA instanceof Missile && spriteB instanceof Missile){
              
                 return false;   
