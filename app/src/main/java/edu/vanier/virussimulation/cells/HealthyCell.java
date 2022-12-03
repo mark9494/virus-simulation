@@ -14,8 +14,6 @@ import javafx.scene.paint.ImagePattern;
  */
 public class HealthyCell extends Cell {
 
-    // counts how many times the healthy cell has been in contact with a virus cell
-
     public HealthyCell(int hitCounter, double size, double speed, boolean motion) {
         super(size, speed, motion);
         this.hitCounter = 0;
@@ -23,9 +21,7 @@ public class HealthyCell extends Cell {
     }
 
     public HealthyCell() {
-        
         Image healthy1 = new Image("/images/Healthy_Cell_1.png", false);
-        
         this.setFill(new ImagePattern(healthy1));
         this.setIsHealthy(true);
         this.hitCounter = 0;

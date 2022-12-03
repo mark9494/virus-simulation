@@ -38,12 +38,9 @@ public class SimulationWindowController extends SimulationSettings {
 
     public double randomPositionX1;
     private int startBtnCounter = 0;
-    @FXML
-    private HBox bottomBar;
+
     @FXML
     private Button btnStart;
-    @FXML
-    private Button btnAddHealthyCell;
     @FXML
     private Button btnAddFluVirus;
     @FXML
@@ -93,7 +90,7 @@ public class SimulationWindowController extends SimulationSettings {
     boolean clickedFluButton = false;
     boolean clickedCustomButton = false;
 
-    public static StopWatch sw ;
+    public static StopWatch sw;
 
     SimulationSettings simSettings;
 
@@ -118,6 +115,10 @@ public class SimulationWindowController extends SimulationSettings {
         });
     }
 
+    /**
+     * Creates number of cells based off of slider info from user
+     *
+     */
     public void generateCells() {
         numberOfCells = (int) sldAmountCell.getValue();
         for (int i = 0; i < numberOfCells; i++) {
@@ -125,6 +126,16 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
+    /**
+     * method to control the activation of control buttons throughout the
+     * simulation
+     *
+     *
+     * @param play - On/Off.
+     * @param pause - On/off.
+     * @param stop - On/off.
+     * @param submit - On/off.
+     */
     private void disableControlButtons(boolean play, boolean pause, boolean stop, boolean submit) {
         btnStart.setDisable(play);
         btnPause.setDisable(pause);
@@ -132,6 +143,14 @@ public class SimulationWindowController extends SimulationSettings {
         btnSubmit.setDisable(submit);
     }
 
+    /**
+     * controls the activation of the virus type.
+     *
+     *
+     * @param covid - On/Off.
+     * @param flu - On/off.
+     * @param custom - On/off.
+     */
     public void disableVirusButtons(boolean covid, boolean flu, boolean custom) {
         btnCustomVirus.setDisable(custom);
         btnAddCovidVirus.setDisable(covid);
@@ -139,6 +158,15 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
+    /**
+     * controls the activation of the virus customization sliders.
+     *
+     *
+     * @param amount - On/Off.
+     * @param size - On/off.
+     * @param speed - On/off.
+     * @param infection- On/off.
+     */
     public void disableVirusSliders(boolean amount, boolean size, boolean speed, boolean infection) {
         sldAmountVirus.setDisable(amount);
         sldSizeVirus.setDisable(size);
@@ -146,6 +174,10 @@ public class SimulationWindowController extends SimulationSettings {
         sldInfectionRate.setDisable(infection);
     }
 
+    /**
+     * Resets all the values of the slider to zero to pick new values.
+     *
+     */
     public void setSlidersDefault() {
         sldInfectionRate.setValue(0);
         sldAmountVirus.setValue(0);
@@ -156,6 +188,10 @@ public class SimulationWindowController extends SimulationSettings {
         sldCellSpeed.setValue(0);
     }
 
+    /**
+     * Creating the timeline and settings.
+     *
+     */
     public void createAnimation() {
         timeline = new Timeline(
                 new KeyFrame(Duration.millis(animationDuration), e -> handleUpdateAnimation()));
@@ -164,6 +200,10 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
+    /**
+     * Detects when there are no more virus cells and ends the simulation.
+     *
+     */
     public void endSimulation() {
         boolean isHealthyLeft = false;
         for (Cell c : cellsArrayList) {
@@ -174,37 +214,50 @@ public class SimulationWindowController extends SimulationSettings {
         if (!isHealthyLeft) {
             timeline.stop();
             sw.suspend();
-            
+
             System.out.println("Full Animation Time " + sw.getTime(TimeUnit.SECONDS) + " Seconds.");
             disableControlButtons(true, true, false, false);
         }
     }
 
+    /**
+     * Fxml function that controls the start button.
+     *
+     */
+    @FXML
     public void handleStart() {
         disableControlButtons(true, false, false, true);
         timeline.play();
         vBox.setDisable(true);
-        
-       sw.resume();
-        
-        
+
+        sw.resume();
+
         startBtnCounter++;
-       
-        
+
     }
 
+    /**
+     * Fxml function that controls the stop button.
+     *
+     */
+    @FXML
     public void handleStop() {
         disableControlButtons(false, true, false, true);
         timeline.pause();
         sw.suspend();
     }
 
+    /**
+     * Fxml function that controls the reset button.
+     *
+     */
+    @FXML
     public void handleReset() {
         clickedCustomButton = false;
         clickedFluButton = false;
         clickedCovidButton = false;
         vBox.setDisable(false);
-       
+
         for (Cell c : cellsArrayList) {
             pane.getChildren().remove(c);
         }
@@ -218,14 +271,17 @@ public class SimulationWindowController extends SimulationSettings {
         disableVirusButtons(false, false, false);
         disableVirusSliders(false, false, false, false);
         timeline.stop();
-        
-        
+
         sw.reset();
         sw.start();
         sw.suspend();// we need all these methods called, otherwise the stopwatch won't work
         statsCounter();
     }
 
+    /**
+     * Fxml function that controls the submit button.
+     *
+     */
     public void handleSubmit() {
         if (!clickedCovidButton && !clickedFluButton && !clickedCustomButton) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -262,10 +318,13 @@ public class SimulationWindowController extends SimulationSettings {
             createFluVirus(numberOfVirus);
         }
         generateCells();
-        
-        
     }
 
+    /**
+     * Fxml function that controls the Covid virus button.
+     *
+     */
+    @FXML
     public void handleAddCovidVirus() {
         clickedCovidButton = true;
         disableVirusButtons(false, true, true);
@@ -273,11 +332,21 @@ public class SimulationWindowController extends SimulationSettings {
         colorPicker.setDisable(true);
     }
 
+    /**
+     * Fxml function that controls the custom virus button.
+     *
+     */
+    @FXML
     public void handleAddCustomVirus() {
         clickedCustomButton = true;
         disableVirusButtons(true, true, false);
     }
 
+    /**
+     * Fxml function that controls the flu virus button.
+     *
+     */
+    @FXML
     public void handleAddFluVirus() {
         clickedFluButton = true;
         disableVirusButtons(true, false, true);
@@ -285,10 +354,10 @@ public class SimulationWindowController extends SimulationSettings {
         colorPicker.setDisable(true);
     }
 
-    public void handleAddHealthyCell() {
-        addHealhyCell();
-    }
-
+    /**
+     * Method that is looped through the single keyframe animation.
+     *
+     */
     private void handleUpdateAnimation() {
         moveBall();
         collide();
@@ -297,6 +366,10 @@ public class SimulationWindowController extends SimulationSettings {
         updateTimer();
     }
 
+    /**
+     * Creates a healthy cell
+     *
+     */
     public void addHealhyCell() {
 
         HealthyCell hc = new HealthyCell();
@@ -315,14 +388,23 @@ public class SimulationWindowController extends SimulationSettings {
     }
 //Turn into Custom and change settings based on user.
 
-    public void addCustomVirusCell(int radius, int Dx, int Dy, int amount, Color color) {
+    /**
+     * Creates custom virus based on user's chosen values.
+     *
+     * @param radius - size of virus.
+     * @param dx - horizontal speed.
+     * @param dy - vertical speed.
+     * @param amount - number of virus cells.
+     * @param color - color of virus cell.
+     */
+    public void addCustomVirusCell(int radius, int dx, int dy, int amount, Color color) {
         for (int i = 0; i < amount; i++) {
             VirusCell vc = new VirusCell();
             cellX = randomThingy.nextInt((int) pane.getWidth());
             cellY = randomThingy.nextInt((int) pane.getHeight());
             vc.setRadius(radius);
-            vc.setDx(Dx);
-            vc.setDy(Dy);
+            vc.setDx(dx);
+            vc.setDy(dy);
             vc.setCenterX(cellX);
             vc.setCenterY(cellY);
             vc.setFill(color);
@@ -334,8 +416,11 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
-    //Double the speed of healthy Cells
-    //Healhty needs to be hit 2 times to 
+    /**
+     * Creates predetermined covid virus.
+     *
+     * @param amount - number of covid cells.
+     */
     public void createCovidVirus(int amount) {
         for (int i = 0; i < amount; i++) {
             CovidVirus cv = new CovidVirus();
@@ -353,6 +438,11 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
+    /**
+     * Creates predetermined flu virus.
+     *
+     * @param amount - number of flu cells.
+     */
     public void createFluVirus(int amount) {
         for (int i = 0; i < amount; i++) {
             FluVirus fv = new FluVirus();
@@ -370,20 +460,22 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
+    /**
+     * Takes care of the ball's movement relative with the border of the
+     * simulation.
+     *
+     */
     public void moveBall() {
         for (Cell c : cellsArrayList) {
-            if (c.getCenterX() < c.getRadius()
-                    || c.getCenterX() > pane.getWidth() - c.getRadius()) {
+            if (c.getCenterX() < c.getRadius() || c.getCenterX() > pane.getWidth() - c.getRadius()) {
                 c.setDx(c.getDx() * -1);
             }
             //If the ball reaches the bottom or top border make the step negative
-            if (c.getCenterY() < c.getRadius()
-                    || c.getCenterY() > pane.getHeight() - c.getRadius()) {
+            if (c.getCenterY() < c.getRadius() || c.getCenterY() > pane.getHeight() - c.getRadius()) {
                 c.setDy(c.getDy() * -1);
             }
             //Border Correction
             //Top Border
-
             c.setCenterX(c.getDx() + c.getCenterX());
             c.setCenterY(c.getDy() + c.getCenterY());
 
@@ -391,8 +483,12 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
+    /**
+     * Manages the collision between two cells. Also manages the type of
+     * collision (healthy - virus).
+     *
+     */
     protected boolean collide() {
-
         for (int i = 0; i < cellsArrayList.size(); i++) {
             for (int j = 0; j < cellsArrayList.size(); j++) {
                 if (j != i) {
@@ -407,7 +503,6 @@ public class SimulationWindowController extends SimulationSettings {
                         a.setCenterY(a.getDy() + a.getCenterY());
                         b.setCenterX(b.getDx() + b.getCenterX());
                         b.setCenterY(b.getDy() + b.getCenterY());
-                        
 
                         if (a instanceof HealthyCell && b instanceof VirusCell) {
                             a.setHitCounter(a.getHitCounter() + 1);
@@ -428,6 +523,13 @@ public class SimulationWindowController extends SimulationSettings {
         return false;
     }
 
+    /**
+     * Manages the conversion of a healthy cell to a virus cell based off of a
+     * collision.
+     *
+     * @param c - taken healthy cell.
+     * @param a- taken virus cell.
+     */
     public void healhtyToVirus(Cell c, VirusCell a) {
         if (a instanceof CovidVirus) {
             CovidVirus vc = new CovidVirus();
@@ -455,8 +557,7 @@ public class SimulationWindowController extends SimulationSettings {
             pane.getChildren().add(vc);
             pane.getChildren().remove(c);
             recenterCells();
-        } //custom virus
-        else {
+        } else {
             VirusCell vc = new VirusCell();
             vc.setCenterX(c.getCenterX());
             vc.setCenterY(c.getCenterY());
@@ -477,6 +578,10 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
+    /**
+     * Corrects problem where cells do not spawn inside simulation border
+     *
+     */
     private void recenterCells() {
         final Bounds bounds = pane.getLayoutBounds();
         double paneWidth = bounds.getMaxX();
@@ -496,6 +601,12 @@ public class SimulationWindowController extends SimulationSettings {
         }
     }
 
+    /**
+     * Corrects problem where cells get stuck and move parallel to simulation
+     * border.
+     *
+     * @param c - taken cell inside simulation.
+     */
     private void borderSpawnCorrection(Cell c) {
 
         if (c.getCenterY() < c.getRadius()) {
@@ -517,6 +628,10 @@ public class SimulationWindowController extends SimulationSettings {
     final ArrayList HCellsList = new ArrayList();
     final ArrayList VCellsList = new ArrayList();
 
+    /**
+     * Method which updates the statistical data of the simulation. Shows
+     * healthy cells remaining, virus cells remaining and percentages.
+     */
     private void statsCounter() {
         for (Cell c : cellsArrayList) {
             if (c instanceof HealthyCell) {
@@ -540,9 +655,7 @@ public class SimulationWindowController extends SimulationSettings {
         if (!this.cellsArrayList.isEmpty()) {
             healthyPercentage = (healthyArraySize / cellsArraySize) * 100;
         }
-
-        percHCells.setText(
-                (int) healthyPercentage + "%");
+        percHCells.setText((int) healthyPercentage + "%");
         //Virus Percentage
         double virusPercentage = 0;
 
@@ -561,6 +674,11 @@ public class SimulationWindowController extends SimulationSettings {
 
     }
 
+    /**
+     * Changes the text displayed in the stopwatch part of the simulation by
+     * always updating the text field with the time.
+     *
+     */
     private void updateTimer() {
         long miliseconds = (sw.getTime(TimeUnit.MILLISECONDS)) - ((sw.getTime(TimeUnit.SECONDS)) * 1000);
         txtCurrentTime.setText(sw.getTime(TimeUnit.MINUTES) + " Minutes " + sw.getTime(TimeUnit.SECONDS) + " Seconds " + miliseconds + " miliseconds");

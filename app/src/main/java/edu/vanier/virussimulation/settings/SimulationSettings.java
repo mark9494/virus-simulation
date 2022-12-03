@@ -18,7 +18,6 @@ public class SimulationSettings {
     Random rand = new Random();
 
     public void SimulationSettings() {
-
         direction.add(-1);
         direction.add(1);
         this.healthyDx = direction.get(rand.nextInt(2));

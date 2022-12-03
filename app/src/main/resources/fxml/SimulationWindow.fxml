@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox fx:id="bottomBar" prefHeight="23.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
          <children>
@@ -149,14 +149,14 @@
                   <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
-                  <Tooltip text="Infection =1 ;Size =20;" />
+                  <Tooltip text="Infection =1 ;Size =20;Infection =1" />
                </tooltip></Button>
             <Button fx:id="btnAddFluVirus" mnemonicParsing="false" onAction="#handleAddFluVirus" text="Add Flu Virus">
                <VBox.margin>
                   <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
                <tooltip>
-                  <Tooltip text="Infection=3 ; size =14" />
+                  <Tooltip text="Infection=3 ; size =14; infection =3" />
                </tooltip></Button>
             <Button fx:id="btnCustomVirus" mnemonicParsing="false" onAction="#handleAddCustomVirus" text="Custom Virus">
                <VBox.margin>
@@ -200,12 +200,12 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider fx:id="sldSpeedVirus" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="4" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sldSpeedVirus" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets bottom="3.0" left="10.0" right="10.0" />
                </VBox.margin>
             </Slider>
-            <Label text="Infection">
+            <Label text="Infection per hit">
                <font>
                   <Font size="14.0" />
                </font>
