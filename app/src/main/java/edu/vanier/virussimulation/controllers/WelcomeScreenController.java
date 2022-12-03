@@ -30,7 +30,7 @@ public class WelcomeScreenController {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/SimulationWindow.fxml"));
         loader.setController(window2);
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1500.0, 1100.0);
+        Scene scene = new Scene(root, 1000.0, 900.0);
         secondWindow.setScene(scene);
 
         secondWindow.setTitle("Virus Simulation");
