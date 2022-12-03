@@ -458,13 +458,13 @@ public class Ship extends Sprite {
 //            slowDownAmt = 1.3f;
 //            scaleBeginningMissle = 11;
 //        } 
-        if(GameEngine.numberOfInvaders==9){
+        if(GameEngine.level==1){
              fireMissile = new Missile(ResourcesManager.ROCKET_FIRE);
             
             slowDownAmt = 1.3f;
             scaleBeginningMissle = 11;
         }
-        else if(GameEngine.numberOfInvaders==5){
+        else if(GameEngine.level==2){
             fireMissile = new Missile(ResourcesManager.ROCKET_SMALL);
             scaleBeginningMissle = 8;
         }else{

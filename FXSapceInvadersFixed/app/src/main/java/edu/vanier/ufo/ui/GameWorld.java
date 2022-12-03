@@ -183,16 +183,16 @@ public class GameWorld extends GameEngine {
             ImageView atomImage = atom.getImageViewNode();
             // random 0 to 2 + (.0 to 1) * random (1 or -1)
             // Randomize the location of each newly generated atom.
-            if(numberOfInvaders==5){
+            if(level==1){
                 
                atom.setVelocityX((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setVelocityY((rnd.nextInt(2) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1)); 
-            }else if(numberOfInvaders==9){
+            }else if(level==2){
                
                 spaceShip.changeShip(ResourcesManager.SPACE_SHIP);
                atom.setVelocityX((rnd.nextInt(4) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setVelocityY((rnd.nextInt(4) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));  
-            }else if(numberOfInvaders==13){
+            }else if(level==3){
                 spaceShip.changeShip(ResourcesManager.SPACE_SHIP2);
                 atom.setVelocityX((rnd.nextInt(6) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1));
             atom.setVelocityY((rnd.nextInt(6) + rnd.nextDouble()) * (rnd.nextBoolean() ? 1 : -1)); 
@@ -224,7 +224,9 @@ public class GameWorld extends GameEngine {
 
             // add sprite's 
             getSceneNodes().getChildren().add(atom.getNode());
+            
         }
+        images.removeAll(images);
     }
 
     /**
@@ -310,14 +312,8 @@ public class GameWorld extends GameEngine {
     @Override
     protected boolean handleCollision(Sprite spriteA, Sprite spriteB) {
         //TODO: implement collision detection here.
-        if(numberOfInvaders!=13){
-        if(spriteManager.getAllSprites().size()==1){
-            numberOfInvaders +=4;
-            generateManySpheres(numberOfInvaders*2);
-            
-        }
-        }       
-                
+         
+                checkLevel();
                 
         if(spriteA.collide(spriteB)){
             
@@ -342,5 +338,35 @@ public class GameWorld extends GameEngine {
         }
 
         return false;
+    }
+    
+    
+    
+    
+    /**
+     * checks if the ship is the only sprite and generates a newer level
+     *
+     * 
+     */
+    
+    
+    
+    public void checkLevel(){
+        if(spriteManager.getAllSprites().size()==1){
+            stopAnimation();
+            
+        
+       if( level==1){
+           level++;
+          generateManySpheres(15);
+          beginGameLoop();
+           
+       }else if( level==2){
+          level++;
+          generateManySpheres(25); 
+          beginGameLoop();
+       }
+        }
+        
     }
 }

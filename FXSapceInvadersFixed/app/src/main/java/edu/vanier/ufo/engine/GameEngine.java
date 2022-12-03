@@ -27,7 +27,7 @@ import javafx.util.Duration;
  * @author cdea
  */
 public abstract class GameEngine {
-    public static int numberOfInvaders = 5;
+    
     /**
      * The JavaFX Scene as the game surface
      */
@@ -57,7 +57,8 @@ public abstract class GameEngine {
     protected final SpriteManager spriteManager;
 
     private final SoundManager soundManager;
-
+    
+    public static int level=1;
     /**
      * Constructor that is called by the derived class. This will set the frames
      * per second, title, and setup the game loop.
@@ -92,6 +93,7 @@ public abstract class GameEngine {
             }
             // removed dead sprites.
             cleanupSprites();
+            
         };
         final KeyFrame gameFrame = new KeyFrame(frameDuration, onFinished);
         // sets the game world's game loop (Timeline)
@@ -99,6 +101,18 @@ public abstract class GameEngine {
         gameLoop.setCycleCount(Animation.INDEFINITE);
         setGameLoop(gameLoop);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Initialize the game world by update the JavaFX Stage.
@@ -294,6 +308,17 @@ public abstract class GameEngine {
     public void shutdown() {
         // Stop the game's animation.
         getGameLoop().stop();
+        
         getSoundManager().shutdown();
+        
     }
+    
+    public void stopAnimation() {
+        // Stop the game's animation.
+        getGameLoop().stop();
+        
+        
+        
+    }
+    
 }
