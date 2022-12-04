@@ -23,7 +23,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -107,6 +106,8 @@ public class SimulationWindowController extends SimulationSettings {
         sw.start();
         sw.suspend();
         createAnimation();
+        direction.add(-1);
+        direction.add(1);
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterCells();
         });
@@ -297,8 +298,8 @@ public class SimulationWindowController extends SimulationSettings {
         }
         disableControlButtons(false, true, true, true);
         radius = (int) sldCellSize.getValue();
-        healthyDx = (int) sldCellSpeed.getValue();
-        healthyDy = (int) sldCellSpeed.getValue();
+        healthyDx = (int) sldCellSpeed.getValue() * direction.get(rand.nextInt(2));
+        healthyDy = (int) sldCellSpeed.getValue() * direction.get(rand.nextInt(2));
 
         if (clickedCustomButton) {
             convertHitCounter = (int) sldInfectionRate.getValue();
@@ -575,7 +576,6 @@ public class SimulationWindowController extends SimulationSettings {
             pane.getChildren().remove(c);
             recenterCells();
         }
-
     }
 
     /**
