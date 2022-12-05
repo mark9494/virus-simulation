@@ -97,6 +97,8 @@ public class SimulationWindowController extends SimulationSettings {
 
     public static Timeline timeline;
     protected ArrayList<Cell> cellsArrayList = new ArrayList<Cell>();
+    ArrayList HCellsList = new ArrayList();
+    ArrayList VCellsList = new ArrayList();
 
     @FXML
     public void initialize() {
@@ -485,9 +487,10 @@ public class SimulationWindowController extends SimulationSettings {
     }
 
     /**
-     * Manages the collision between two cells. Also manages the type of
+     * Manages the collision between two cells.Also manages the type of
      * collision (healthy - virus).
      *
+     * @return boolean true if collides or false if it doesn't collide.
      */
     protected boolean collide() {
         for (int i = 0; i < cellsArrayList.size(); i++) {
@@ -564,9 +567,7 @@ public class SimulationWindowController extends SimulationSettings {
             vc.setCenterY(c.getCenterY());
             vc.setRadius(virusRadius);
             vc.setDx(a.getDx());
-            System.out.println(virusDx);
             vc.setDy(a.getDy());
-            System.out.println(virusDy);
             vc.setFill(virusColor);
             cellsArrayList.add(vc);
             pane.getChildren().add(vc);
@@ -624,9 +625,6 @@ public class SimulationWindowController extends SimulationSettings {
             c.setCenterY(c.getCenterY() - c.getRadius());
         }
     }
-
-    final ArrayList HCellsList = new ArrayList();
-    final ArrayList VCellsList = new ArrayList();
 
     /**
      * Method which updates the statistical data of the simulation. Shows

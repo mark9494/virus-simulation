@@ -36,6 +36,5 @@ public class WelcomeScreenController {
         secondWindow.setTitle("Virus Simulation");
         secondWindow.sizeToScene();
         secondWindow.show();
-
     }
 }

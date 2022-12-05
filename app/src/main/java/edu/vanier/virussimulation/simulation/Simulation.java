@@ -25,6 +25,7 @@ public class Simulation extends Application {
         stage.show();
     }
 
+    @Override
     public void stop() {
         if (SimulationWindowController.sw.isStarted()) {
             SimulationWindowController.sw.stop();
